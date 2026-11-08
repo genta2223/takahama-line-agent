@@ -107,3 +107,4 @@ def _send_email_if_configured(subject: str, body: str):
         logger.info("Successfully sent notification email to %s", NOTIFY_EMAIL)
     except Exception as e:
         logger.error("Failed to send notification email: %s", e)
+
