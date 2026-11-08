@@ -5,7 +5,7 @@ class Settings(BaseSettings):
     LINE_CHANNEL_SECRET: str = ""
     LINE_CHANNEL_ACCESS_TOKEN: str = ""
     GEMINI_API_KEY: str = ""
-    GEMINI_MODEL: str = "gemini-2.5-flash"
+    GEMINI_MODEL: str = "gemini-flash-latest"
     BASE_URL: str = "http://localhost:8000"
     LIFF_ID: str = ""
     PORT: int = 8000
