@@ -51,7 +51,7 @@
                     <p class="text-[11px] text-emerald-400 font-semibold tracking-wide">安心な高浜を、次世代へ。</p>
                 </div>
             </a>
-            <button onclick="closeLiffOrHome()" class="text-xs bg-navy-800 hover:bg-navy-700 text-slate-200 px-3 py-1.5 rounded-full border border-slate-600/50 flex items-center space-x-1 transition-colors">
+            <button onclick="closeLiffOrRedirect()" class="text-xs bg-navy-800 hover:bg-navy-700 text-slate-200 px-3 py-1.5 rounded-full border border-slate-600/50 flex items-center space-x-1 transition-colors">
                 <span>✕</span>
                 <span>閉じる</span>
             </button>
@@ -68,7 +68,7 @@
         <div class="max-w-md mx-auto px-4 text-center space-y-4">
             <!-- Back to LINE action button -->
             <div>
-                <button onclick="closeLiffOrHome()" class="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold py-3 px-4 rounded-xl border border-slate-700 flex items-center justify-center space-x-2 shadow-sm transition-all">
+                <button onclick="closeLiffOrRedirect()" class="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold py-3 px-4 rounded-xl border border-slate-700 flex items-center justify-center space-x-2 shadow-sm transition-all">
                     <span>💬</span>
                     <span>LINEトーク画面に戻る</span>
                 </button>
@@ -88,20 +88,17 @@
 
     <!-- Universal Close & Fallback Script -->
     <script>
-        function closeLiffOrHome() {
+        function closeLiffOrRedirect() {
             try {
-                if (typeof liff !== 'undefined' && liff.isLoggedIn && liff.isInClient && liff.isInClient()) {
+                if (typeof liff !== 'undefined' && liff.isInClient && liff.isInClient()) {
                     liff.closeWindow();
                     return;
                 }
             } catch (e) {
-                console.log('liff close fallback:', e);
+                console.warn("LIFF close failed:", e);
             }
-            if (window.history.length > 1) {
-                window.location.href = '/';
-            } else {
-                window.close();
-            }
+            // フォールバック: 公式アカウントのトーク画面を開くLINE URLスキーム
+            window.location.href = "https://line.me/R/oaMessage/@078lejir";
         }
 
         // Initialize LIFF safely without blocking page rendering

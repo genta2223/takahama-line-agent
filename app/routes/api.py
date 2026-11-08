@@ -4,9 +4,10 @@ import uuid
 import datetime
 from pathlib import Path
 from typing import List, Optional
-from fastapi import APIRouter, Form, File, UploadFile, HTTPException
+from fastapi import APIRouter, Form, File, UploadFile, HTTPException, BackgroundTasks
 from pydantic import BaseModel
 from app.bot.gemini_service import gemini_service
+from app.services.notifier import notify_issue_submission, notify_supporter_registration
 
 router = APIRouter()
 
@@ -43,6 +44,7 @@ async def chat_with_sakaguchi(payload: ChatRequest):
 
 @router.post("/issues")
 async def report_issue(
+    background_tasks: BackgroundTasks,
     district: str = Form(...),
     category: str = Form(...),
     description: str = Form(...),
@@ -81,10 +83,13 @@ async def report_issue(
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(issue_data, f, ensure_ascii=False, indent=2)
 
+    # Trigger async notification to genta2223@gmail.com / log
+    background_tasks.add_task(notify_issue_submission, issue_data)
+
     return {"status": "success", "issue_id": issue_id, "data": issue_data}
 
 @router.post("/supporters")
-async def register_supporter(payload: SupporterRequest):
+async def register_supporter(payload: SupporterRequest, background_tasks: BackgroundTasks):
     """Register a new supporter or volunteer."""
     if not payload.name.strip() or not payload.contact.strip():
         raise HTTPException(status_code=400, detail="お名前と連絡先は必須です")
@@ -106,6 +111,9 @@ async def register_supporter(payload: SupporterRequest):
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(supporter_data, f, ensure_ascii=False, indent=2)
 
+    # Trigger async notification to genta2223@gmail.com / log
+    background_tasks.add_task(notify_supporter_registration, supporter_data)
+
     return {"status": "success", "supporter_id": supporter_id}
 
 @router.get("/issues/list")
@@ -120,3 +128,4 @@ async def list_issues():
             continue
     issues.sort(key=lambda x: x.get("timestamp", ""), reverse=True)
     return {"total": len(issues), "issues": issues}
+
