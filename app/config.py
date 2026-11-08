@@ -8,6 +8,8 @@ class Settings(BaseSettings):
     GEMINI_MODEL: str = "gemini-flash-latest"
     BASE_URL: str = "http://localhost:8000"
     LIFF_ID: str = ""
+    GAS_WEBHOOK_URL: str = ""
+    ADMIN_EMAIL: str = "genta2223@gmail.com"
     PORT: int = 8000
     HOST: str = "0.0.0.0"
 
