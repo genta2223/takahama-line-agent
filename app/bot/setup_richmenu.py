@@ -14,7 +14,7 @@ def setup_richmenu(image_path: str = None):
         print("[ERROR] LINE_CHANNEL_ACCESS_TOKEN is not set.")
         return
 
-    line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
+    line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN, timeout=30)
     json_path = Path(__file__).parent / "richmenu.json"
 
     with open(json_path, "r", encoding="utf-8") as f:
