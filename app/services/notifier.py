@@ -2,6 +2,7 @@ import os
 import smtplib
 import logging
 import datetime
+import traceback
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from pathlib import Path
@@ -36,16 +37,19 @@ async def send_to_gas_webhook(payload: Dict[str, Any]):
 
     try:
         # Note: Google Apps Script Web Apps return 302 Found on POST, follow_redirects=True is required
-        async with httpx.AsyncClient(follow_redirects=True, timeout=15.0) as client:
+        async with httpx.AsyncClient(follow_redirects=True, timeout=20.0) as client:
             resp = await client.post(gas_url, json=payload)
             logger.info("GAS Webhook response status: %s, text: %s", resp.status_code, resp.text[:120])
             log_notification(
                 f"[GAS Webhook 送信成功: HTTP {resp.status_code}]",
                 f"Type: {payload.get('type')}\nResponse: {resp.text[:200]}"
             )
+            print(f"[GAS SUCCESS] Type: {payload.get('type')}, HTTP {resp.status_code}: {resp.text[:100]}")
     except Exception as e:
-        logger.error("Failed to forward payload to GAS Webhook: %s", e)
-        log_notification("[GAS Webhook 送信エラー]", f"Error: {e}\nPayload: {payload}")
+        err_tb = traceback.format_exc()
+        logger.error("Failed to forward payload to GAS Webhook: %s\n%s", e, err_tb)
+        log_notification("[GAS Webhook 送信エラー]", f"Error: {e}\nTraceback:\n{err_tb}\nPayload: {payload}")
+        print(f"[GAS ERROR] Failed: {e}\n{err_tb}")
 
 async def notify_issue_submission(issue_data: Dict[str, Any]):
     """Notify when a new civic hazard/issue is submitted."""
