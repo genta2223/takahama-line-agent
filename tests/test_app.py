@@ -54,3 +54,4 @@ def test_supporter_registration():
     data = res.json()
     assert data["status"] == "success"
     assert "supporter_id" in data
+

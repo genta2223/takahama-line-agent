@@ -4,78 +4,132 @@
 
 {% block content %}
 <div class="space-y-6">
-    <!-- Header Profile Card -->
-    <div class="bg-white p-5 rounded-2xl border border-slate-200 card-shadow text-center space-y-3">
-        <div class="w-20 h-20 rounded-full bg-slate-900 border-4 border-emerald-500 text-white flex items-center justify-center font-bold text-2xl mx-auto shadow-md">
-            阪口
+    <!-- Candidate Main Card -->
+    <div class="bg-white p-5 rounded-2xl border border-slate-200 card-elevation text-center space-y-3 relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-16 bg-navy-900"></div>
+        <div class="relative pt-4">
+            <div class="w-24 h-24 rounded-full bg-white border-4 border-emerald-500 shadow-md text-navy-900 flex items-center justify-center font-black text-3xl mx-auto">
+                阪口
+            </div>
         </div>
-        <div>
-            <span class="text-[11px] text-slate-500 font-semibold">さかぐち げんた</span>
-            <h2 class="text-xl font-extrabold text-slate-900">阪口 源太</h2>
-            <p class="text-xs text-emerald-700 font-bold mt-0.5">高浜町 青郷地区 横津海 出身（50歳）</p>
+        <div class="space-y-1">
+            <span class="text-xs text-slate-500 font-bold">さかぐち げんた</span>
+            <h2 class="text-2xl font-black text-slate-900 tracking-tight">阪口 源太</h2>
+            <p class="text-xs text-emerald-700 font-extrabold">福井県高浜町 青郷地区 横津海 出身（50歳）</p>
         </div>
-        <p class="text-xs text-slate-600 leading-relaxed text-left bg-slate-50 p-3 rounded-xl border border-slate-100">
+        <p class="text-xs text-slate-600 leading-relaxed text-left bg-slate-50 p-3.5 rounded-xl border border-slate-200/60 font-medium">
             「安心な高浜を、次世代へ。」<br>
-            横津海の実家『阪口商店』で育ち、民間IT企業を経営。東大松尾研等でAIの最前線を学び、元・沖縄県与那国町議会議員として地方議会の実務を経験。50歳を迎えた今、愛する故郷・高浜町のために持てるすべての知見と情熱を注ぎます。
+            横津海の実家『阪口商店』で育ち、民間IT企業を創業・経営。東大松尾研等でAIの最前線を学び、元・沖縄県与那国町議会議員として地方議会の実務を経験。50歳を迎えた今、愛する故郷・高浜町のために持てるすべての知見と情熱を注ぎます。
         </p>
     </div>
 
-    <!-- Credentials / Badges -->
+    <!-- Academic & Personal Roots -->
+    <div class="bg-white p-4 rounded-xl border border-slate-200 card-elevation space-y-2.5">
+        <h3 class="text-xs font-extrabold text-navy-900 flex items-center space-x-1.5 border-b border-slate-100 pb-2">
+            <span>🏫</span>
+            <span>学歴・出自のルーツ</span>
+        </h3>
+        <ul class="text-xs text-slate-700 space-y-2">
+            <li class="flex items-start space-x-2">
+                <span class="text-emerald-600 font-bold">●</span>
+                <span><strong>昭和51年（1976年）生まれ:</strong> 50歳（団塊ジュニア世代）</span>
+            </li>
+            <li class="flex items-start space-x-2">
+                <span class="text-emerald-600 font-bold">●</span>
+                <span><strong>実家・屋号:</strong> 高浜町青郷地区 横津海「阪口商店」（地域密着の生活インフラ）長男</span>
+            </li>
+            <li class="flex items-start space-x-2">
+                <span class="text-emerald-600 font-bold">●</span>
+                <span><strong>学歴:</strong> 高浜町立青郷小学校 卒業 ／ 高浜町立高浜中学校 卒業 ／ 福井県立若狭高等学校 卒業</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Credentials / Professional Badges -->
     <div class="space-y-3">
-        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">専門性と公的実績</h3>
-        <div class="space-y-2">
-            <div class="bg-white p-3 rounded-xl border border-slate-200 card-shadow flex items-center space-x-3">
-                <span class="text-2xl">🏛️</span>
+        <h3 class="text-xs font-extrabold text-slate-500 uppercase tracking-wider">専門性と公的実績（客観的強み）</h3>
+        <div class="space-y-2.5">
+            <!-- Badge 1: 地方議員実務 -->
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200 card-elevation flex items-start space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center text-xl flex-shrink-0">
+                    🏛️
+                </div>
                 <div>
-                    <h4 class="font-bold text-xs text-slate-900">元 沖縄県与那国町議会議員</h4>
-                    <p class="text-[11px] text-slate-500">一般質問・予算決算審査・行政監視の実務を熟知した即戦力</p>
+                    <h4 class="font-extrabold text-xs text-slate-900">元 沖縄県与那国町議会議員</h4>
+                    <p class="text-[11px] text-slate-600 mt-0.5 leading-relaxed">
+                        国境の町で一般質問、予算・決算特別委員会、条例制定、行政監視の実務を徹底経験。当選初日からフル稼働できる地方議会の即戦力です。
+                    </p>
                 </div>
             </div>
-            <div class="bg-white p-3 rounded-xl border border-slate-200 card-shadow flex items-center space-x-3">
-                <span class="text-2xl">🎓</span>
+
+            <!-- Badge 2: 東大松尾研 -->
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200 card-elevation flex items-start space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl flex-shrink-0">
+                    🎓
+                </div>
                 <div>
-                    <h4 class="font-bold text-xs text-slate-900">東京大学 松尾・岩澤研究室 修了</h4>
-                    <p class="text-[11px] text-slate-500">深層生成モデル・深層学習基礎・Physical AI等の先端AI修得</p>
+                    <h4 class="font-extrabold text-xs text-slate-900">東京大学 松尾・岩澤研究室 集中講義 修了</h4>
+                    <p class="text-[11px] text-slate-600 mt-0.5 leading-relaxed">
+                        深層生成モデル・深層学習基礎・Physical AI等の最先端AI技術を修得。行政AXやAIオンデマンド交通の具現化に直結します。
+                    </p>
                 </div>
             </div>
-            <div class="bg-white p-3 rounded-xl border border-slate-200 card-shadow flex items-center space-x-3">
-                <span class="text-2xl">🛡️</span>
+
+            <!-- Badge 3: Google / IBM -->
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200 card-elevation flex items-start space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-xl flex-shrink-0">
+                    🛡️
+                </div>
                 <div>
-                    <h4 class="font-bold text-xs text-slate-900">Google / IBM 認定プロフェッショナル</h4>
-                    <p class="text-[11px] text-slate-500">サイバーセキュリティ・データ解析の国際認定保有</p>
+                    <h4 class="font-extrabold text-xs text-slate-900">Google / IBM 認定プロフェッショナル</h4>
+                    <p class="text-[11px] text-slate-600 mt-0.5 leading-relaxed">
+                        サイバーセキュリティおよび高度データ解析の国際基準プロフェッショナル認定を保持。原発立地町における重要インフラ防衛・公金IT監査を担います。
+                    </p>
                 </div>
             </div>
-            <div class="bg-white p-3 rounded-xl border border-slate-200 card-shadow flex items-center space-x-3">
-                <span class="text-2xl">🏪</span>
+
+            <!-- Badge 4: 民間IT企業経営 -->
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200 card-elevation flex items-start space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl flex-shrink-0">
+                    💼
+                </div>
                 <div>
-                    <h4 class="font-bold text-xs text-slate-900">青郷・横津海「阪口商店」長男</h4>
-                    <p class="text-[11px] text-slate-500">青郷小・高浜中卒業。地域密着の商店で培った現場感覚</p>
+                    <h4 class="font-extrabold text-xs text-slate-900">民間IT企業経営（起業家・IT福祉支援）</h4>
+                    <p class="text-[11px] text-slate-600 mt-0.5 leading-relaxed">
+                        20年以上にわたるITビジネス経営と福祉・教育分野へのテクノロジー実装経験。税金に頼らない自立的な産業振興を推進します。
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 3 Core Stances -->
+    <!-- Positioning Matrix -->
     <div class="space-y-3">
-        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">議会でのポジショニング（第3の選択肢）</h3>
-        <div class="bg-white p-4 rounded-xl border border-slate-200 card-shadow space-y-3 text-xs">
-            <div>
-                <span class="font-bold text-blue-700">【対 行政】 建設的な改善提案</span>
-                <p class="text-slate-600 mt-0.5">追認でも反対一辺倒でもなく、良い施策は即賛成し、不備は専門知見で具体的代替案を提示。</p>
+        <h3 class="text-xs font-extrabold text-slate-500 uppercase tracking-wider">議会でのポジショニング（第3の選択肢）</h3>
+        <div class="bg-white rounded-xl border border-slate-200 card-elevation overflow-hidden divide-y divide-slate-100 text-xs">
+            <div class="p-3.5 space-y-1">
+                <span class="inline-block px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-extrabold text-[10px]">対 行政</span>
+                <p class="font-bold text-slate-900">単なる追認や批判ではなく、専門知見で具体的代替案を提示</p>
+                <p class="text-slate-600 text-[11px]">町政の良い施策は即賛成・全力で後押しし、不備や課題にはITと現場目線で改善策を示します。</p>
             </div>
-            <div class="border-t border-slate-100 pt-2">
-                <span class="font-bold text-emerald-700">【対 財政】 積算監査で100億円を死守</span>
-                <p class="text-slate-600 mt-0.5">予算の額面論争にとどまらず、IT監査・積算根拠の検証で公金の無駄を徹底排除。</p>
+            <div class="p-3.5 space-y-1">
+                <span class="inline-block px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-extrabold text-[10px]">対 財政</span>
+                <p class="font-bold text-slate-900">額面論争にとどまらず、積算根拠と投資対効果を厳格監査</p>
+                <p class="text-slate-600 text-[11px]">100億円基金をハコモノ追認から守り、公金の無駄を省いて町民の命と医療・福祉へ回します。</p>
             </div>
-            <div class="border-t border-slate-100 pt-2">
-                <span class="font-bold text-amber-700">【対 住民】 24時間365日の対話</span>
-                <p class="text-slate-600 mt-0.5">選挙の時だけの広報ではなく、LINEやデジタル窓口で日常の声を常に政策へ反映。</p>
+            <div class="p-3.5 space-y-1">
+                <span class="inline-block px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-extrabold text-[10px]">対 住民</span>
+                <p class="font-bold text-slate-900">選挙時だけの広報ではなく、LINEやWebで日常の声を常時集約</p>
+                <p class="text-slate-600 text-[11px]">24時間365日、町民のお困りごとに耳を傾け、議会報告と双方向対話を恒常化します。</p>
             </div>
         </div>
     </div>
 
+    <!-- Close button -->
     <div class="text-center pt-2">
-        <a href="/" class="inline-block text-xs text-slate-600 hover:text-slate-900 underline font-medium">← ホームに戻る</a>
+        <button onclick="closeLiffOrHome()" class="text-xs text-slate-600 hover:text-slate-900 underline font-semibold">
+            ← LINEトーク画面に戻る
+        </button>
     </div>
 </div>
 {% endblock %}

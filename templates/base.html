@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{% block title %}阪口源太 公式情報{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>{% block title %}阪口源太 公式情報｜福井県高浜町{% endblock %}</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,59 +12,101 @@
                 extend: {
                     colors: {
                         navy: {
-                            800: '#1e293b',
-                            900: '#0f172a',
-                            950: '#0a0f1d'
+                            800: '#243b67',
+                            900: '#1A2B4C',
+                            950: '#101c33'
                         },
-                        brand: {
-                            blue: '#1d4ed8',
-                            emerald: '#059669',
-                            orange: '#ea580c'
+                        emerald: {
+                            500: '#10B981',
+                            600: '#059669',
+                            700: '#047857'
+                        },
+                        amber: {
+                            500: '#F59E0B',
+                            600: '#D97706'
                         }
                     }
                 }
             }
         }
     </script>
-    <!-- LIFF SDK -->
+    <!-- LINE Front-end Framework (LIFF) SDK -->
     <script charset="utf-8" src="https://static.line-scdn.net/liff/2.1/sdk.js"></script>
     <link rel="stylesheet" href="/static/css/style.css">
     {% block head %}{% endblock %}
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col font-sans">
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
     <!-- Header -->
-    <header class="bg-navy-950 text-white shadow-md sticky top-0 z-50">
+    <header class="bg-navy-900 text-white shadow-lg sticky top-0 z-40 border-b border-navy-800">
         <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="/" class="flex items-center space-x-2">
-                <div class="w-8 h-8 rounded-full bg-brand-emerald flex items-center justify-center font-bold text-white text-sm">
+            <a href="/" class="flex items-center space-x-2.5">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center font-extrabold text-white text-base shadow-sm">
                     源
                 </div>
                 <div>
-                    <h1 class="text-sm font-bold tracking-tight">阪口 源太（さかぐち げんた）</h1>
-                    <p class="text-xs text-slate-300">福井県高浜町｜安心を次世代へ</p>
+                    <div class="flex items-center space-x-1.5">
+                        <h1 class="text-sm font-extrabold tracking-tight">阪口 源太</h1>
+                        <span class="text-[10px] text-slate-300 font-medium">後援会事務所</span>
+                    </div>
+                    <p class="text-[11px] text-emerald-400 font-semibold tracking-wide">安心な高浜を、次世代へ。</p>
                 </div>
             </a>
-            <span class="text-xs px-2 py-1 rounded bg-slate-800 text-emerald-400 font-semibold border border-emerald-500/30">
-                公式Web
-            </span>
+            <button onclick="closeLiffOrHome()" class="text-xs bg-navy-800 hover:bg-navy-700 text-slate-200 px-3 py-1.5 rounded-full border border-slate-600/50 flex items-center space-x-1 transition-colors">
+                <span>✕</span>
+                <span>閉じる</span>
+            </button>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow max-w-md mx-auto w-full px-4 py-6">
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-md mx-auto w-full px-4 py-5 space-y-6">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 text-xs py-6 mt-8 border-t border-slate-800">
-        <div class="max-w-md mx-auto px-4 text-center space-y-2">
-            <p class="font-medium text-slate-300">阪口源太 後援会事務所</p>
-            <p>福井県大飯郡高浜町 横津海（青郷地区）</p>
-            <p class="text-[11px] text-slate-500">※本サイト・公式LINEは政治活動・政策広報を目的として運用されています。</p>
-            <p class="text-[10px] text-slate-600 mt-2">© 2026-2027 Genta Sakaguchi Supporter Club.</p>
+    <!-- Footer with LINE Navigation -->
+    <footer class="bg-navy-950 text-slate-400 text-xs py-7 border-t border-navy-900 mt-auto">
+        <div class="max-w-md mx-auto px-4 text-center space-y-4">
+            <!-- Back to LINE action button -->
+            <div>
+                <button onclick="closeLiffOrHome()" class="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold py-3 px-4 rounded-xl border border-slate-700 flex items-center justify-center space-x-2 shadow-sm transition-all">
+                    <span>💬</span>
+                    <span>LINEトーク画面に戻る</span>
+                </button>
+            </div>
+
+            <!-- Supporter & Office Info -->
+            <div class="space-y-1 text-slate-400 text-[11px]">
+                <p class="font-bold text-slate-300">阪口源太 後援会事務所</p>
+                <p>福井県大飯郡高浜町 横津海（青郷地区・阪口商店前）</p>
+                <p class="text-[10px] text-slate-500 pt-1">
+                    ※本公式Web/LIFFは公職選挙法・政治資金規正法に則った政治活動・政策広報ツールです。
+                </p>
+            </div>
+            <p class="text-[10px] text-slate-600">© 2026-2027 Genta Sakaguchi Supporter Club.</p>
         </div>
     </footer>
 
+    <!-- Universal LIFF Close Script -->
+    <script>
+        function closeLiffOrHome() {
+            if (typeof liff !== 'undefined' && liff.isInClient && liff.isInClient()) {
+                liff.closeWindow();
+            } else if (window.history.length > 1) {
+                window.location.href = '/';
+            } else {
+                window.close();
+            }
+        }
+
+        // Initialize LIFF if available
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof liff !== 'undefined') {
+                liff.init({ liffId: "{{ settings.LIFF_ID if settings else '' }}" }).catch((err) => {
+                    console.log('LIFF initialization bypass or fallback:', err);
+                });
+            }
+        });
+    </script>
     {% block scripts %}{% endblock %}
 </body>
 </html>
