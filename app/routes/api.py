@@ -2,6 +2,7 @@ import os
 import json
 import uuid
 import datetime
+import base64
 from pathlib import Path
 from typing import List, Optional
 from fastapi import APIRouter, Form, File, UploadFile, HTTPException, BackgroundTasks
@@ -57,6 +58,10 @@ async def report_issue(
     timestamp = datetime.datetime.now().isoformat()
 
     photo_path = None
+    image_base64 = None
+    image_name = None
+    image_mime = None
+
     if photo and photo.filename:
         ext = Path(photo.filename).suffix
         saved_filename = f"{issue_id}_{int(datetime.datetime.now().timestamp())}{ext}"
@@ -65,6 +70,9 @@ async def report_issue(
         with open(destination, "wb") as f:
             f.write(contents)
         photo_path = f"/static/uploads/{saved_filename}"
+        image_name = photo.filename
+        image_mime = photo.content_type or "image/jpeg"
+        image_base64 = base64.b64encode(contents).decode("utf-8")
 
     issue_data = {
         "id": issue_id,
@@ -75,6 +83,9 @@ async def report_issue(
         "description": description,
         "reporter_name": reporter_name or "匿名町民",
         "photo_url": photo_path,
+        "image_name": image_name,
+        "image_mime": image_mime,
+        "image_base64": image_base64,
         "status": "受付完了（阪口源太確認中）"
     }
 

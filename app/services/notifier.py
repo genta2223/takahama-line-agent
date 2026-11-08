@@ -37,7 +37,8 @@ async def send_to_gas_webhook(payload: Dict[str, Any]):
 
     try:
         # Note: Google Apps Script Web Apps return 302 Found on POST, follow_redirects=True is required
-        async with httpx.AsyncClient(follow_redirects=True, timeout=20.0) as client:
+        # Timeout set to 30.0s to allow Base64 image upload and Google Drive storage processing
+        async with httpx.AsyncClient(follow_redirects=True, timeout=30.0) as client:
             resp = await client.post(gas_url, json=payload)
             logger.info("GAS Webhook response status: %s, text: %s", resp.status_code, resp.text[:120])
             log_notification(
@@ -48,7 +49,7 @@ async def send_to_gas_webhook(payload: Dict[str, Any]):
     except Exception as e:
         err_tb = traceback.format_exc()
         logger.error("Failed to forward payload to GAS Webhook: %s\n%s", e, err_tb)
-        log_notification("[GAS Webhook 送信エラー]", f"Error: {e}\nTraceback:\n{err_tb}\nPayload: {payload}")
+        log_notification("[GAS Webhook 送信エラー]", f"Error: {e}\nTraceback:\n{err_tb}\nType: {payload.get('type')}")
         print(f"[GAS ERROR] Failed: {e}\n{err_tb}")
 
 async def notify_issue_submission(issue_data: Dict[str, Any]):
@@ -89,13 +90,16 @@ async def notify_issue_submission(issue_data: Dict[str, Any]):
     log_notification(subject, body)
     _send_email_if_configured(subject, body)
 
-    # Forward to Google Apps Script (Spreadsheet & Gmail)
+    # Forward to Google Apps Script (Spreadsheet, Google Drive & Gmail)
     gas_payload = {
         "type": "issue",
         "district": district,
         "category": category,
         "details": details,
         "image_url": full_photo_url,
+        "image_name": issue_data.get("image_name"),
+        "image_mime": issue_data.get("image_mime"),
+        "image_base64": issue_data.get("image_base64"),
         "contact": reporter,
         "timestamp": timestamp
     }
