@@ -19,13 +19,15 @@
     <div id="status-alert" class="hidden p-3.5 rounded-xl text-xs font-bold transition-all"></div>
 
     <!-- Form -->
-    <form id="issue-form" enctype="multipart/form-data" class="bg-white p-5 rounded-2xl border border-slate-200 card-elevation space-y-5">
+    <form id="issue-form" enctype="multipart/form-data"
+        class="bg-white p-5 rounded-2xl border border-slate-200 card-elevation space-y-5">
         <!-- 1. District Selection -->
         <div class="space-y-1.5">
             <label class="block text-xs font-bold text-slate-800">
                 ① 地区・集落名 <span class="text-red-500 font-bold">*</span>
             </label>
-            <select name="district" required class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 font-medium">
+            <select name="district" required
+                class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 font-medium">
                 <option value="">選択してください</option>
                 <optgroup label="青郷地区（せいきょう）">
                     <option value="青郷（横津海）">青郷（横津海 / よこつみ）</option>
@@ -60,28 +62,40 @@
                 ② 困りごとの種類 <span class="text-red-500 font-bold">*</span>
             </label>
             <div class="grid grid-cols-2 gap-2" id="category-group">
-                <label class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
-                    <input type="radio" name="category" value="道路・踏切・交通の危険" required class="text-amber-600 focus:ring-amber-500 mr-2">
+                <label
+                    class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
+                    <input type="radio" name="category" value="道路・踏切・交通の危険" required
+                        class="text-amber-600 focus:ring-amber-500 mr-2">
                     <span class="text-[11px] font-bold text-slate-800">🚦 道路・踏切・交通</span>
                 </label>
-                <label class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
-                    <input type="radio" name="category" value="水路・排水・冠水" required class="text-amber-600 focus:ring-amber-500 mr-2">
+                <label
+                    class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
+                    <input type="radio" name="category" value="水路・排水・冠水" required
+                        class="text-amber-600 focus:ring-amber-500 mr-2">
                     <span class="text-[11px] font-bold text-slate-800">🌊 水路・排水・冠水</span>
                 </label>
-                <label class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
-                    <input type="radio" name="category" value="除草・倒木・街路樹" required class="text-amber-600 focus:ring-amber-500 mr-2">
+                <label
+                    class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
+                    <input type="radio" name="category" value="除草・倒木・街路樹" required
+                        class="text-amber-600 focus:ring-amber-500 mr-2">
                     <span class="text-[11px] font-bold text-slate-800">🌲 除草・倒木・樹木</span>
                 </label>
-                <label class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
-                    <input type="radio" name="category" value="鳥獣害（イノシシ・シカ等）" required class="text-amber-600 focus:ring-amber-500 mr-2">
+                <label
+                    class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
+                    <input type="radio" name="category" value="鳥獣害（イノシシ・シカ等）" required
+                        class="text-amber-600 focus:ring-amber-500 mr-2">
                     <span class="text-[11px] font-bold text-slate-800">🐗 鳥獣害（イノシシ等）</span>
                 </label>
-                <label class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
-                    <input type="radio" name="category" value="高齢者の移動・交通の足" required class="text-amber-600 focus:ring-amber-500 mr-2">
+                <label
+                    class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
+                    <input type="radio" name="category" value="高齢者の移動・交通の足" required
+                        class="text-amber-600 focus:ring-amber-500 mr-2">
                     <span class="text-[11px] font-bold text-slate-800">🚌 高齢者の足・バス</span>
                 </label>
-                <label class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
-                    <input type="radio" name="category" value="その他生活相談" required class="text-amber-600 focus:ring-amber-500 mr-2">
+                <label
+                    class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
+                    <input type="radio" name="category" value="その他生活相談" required
+                        class="text-amber-600 focus:ring-amber-500 mr-2">
                     <span class="text-[11px] font-bold text-slate-800">💬 その他生活相談</span>
                 </label>
             </div>
@@ -92,15 +106,18 @@
             <label class="block text-xs font-bold text-slate-800">
                 ③ 現場の写真（スマホで撮影・添付）
             </label>
-            <div class="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer relative" onclick="document.getElementById('photo-input').click()">
+            <div class="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer relative"
+                onclick="document.getElementById('photo-input').click()">
                 <div class="space-y-1 text-slate-600">
                     <span class="text-2xl">📸</span>
                     <p class="text-xs font-bold">写真をタップして選択または撮影</p>
                     <p class="text-[10px] text-slate-400">※最大10MB（JPEG, PNG等）</p>
                 </div>
-                <input type="file" id="photo-input" name="photo" accept="image/*" class="hidden" onchange="previewImage(this)">
+                <input type="file" id="photo-input" name="photo" accept="image/*" class="hidden"
+                    onchange="previewImage(this)">
                 <div id="image-preview" class="hidden mt-3">
-                    <img id="preview-img" class="max-h-40 mx-auto rounded-lg border border-slate-200 shadow-sm" src="#" alt="プレビュー">
+                    <img id="preview-img" class="max-h-40 mx-auto rounded-lg border border-slate-200 shadow-sm" src="#"
+                        alt="プレビュー">
                     <p id="file-name" class="text-[10px] text-emerald-700 font-bold mt-1"></p>
                 </div>
             </div>
@@ -111,7 +128,8 @@
             <label class="block text-xs font-bold text-slate-800">
                 ④ 現場の詳しい場所・目印
             </label>
-            <input type="text" name="location" placeholder="例：〇〇寺の北側水路、国道27号〇〇交差点付近" class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500">
+            <input type="text" name="location" placeholder="例：〇〇寺の北側水路、国道27号〇〇交差点付近"
+                class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500">
         </div>
 
         <!-- 5. Issue Description -->
@@ -119,7 +137,8 @@
             <label class="block text-xs font-bold text-slate-800">
                 ⑤ 困りごと・状況の詳細 <span class="text-red-500 font-bold">*</span>
             </label>
-            <textarea name="description" rows="4" required placeholder="雨の日の冠水状況、夜間の見通しの悪さ、歩行者の危険などをご自由にお聞かせください。" class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 leading-relaxed"></textarea>
+            <textarea name="description" rows="4" required placeholder="雨の日の冠水状況、夜間の見通しの悪さ、歩行者の危険などをご自由にお聞かせください。"
+                class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 leading-relaxed"></textarea>
         </div>
 
         <!-- 6. Reporter Info (Optional) -->
@@ -127,11 +146,13 @@
             <label class="block text-xs font-bold text-slate-800">
                 ⑥ お名前・連絡先（任意入力・匿名可）
             </label>
-            <input type="text" name="reporter_name" placeholder="匿名でも送信いただけます（例：青郷住民、〇〇地区住民）" class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500">
+            <input type="text" name="reporter_name" placeholder="匿名でも送信いただけます（例：青郷住民、〇〇地区住民）"
+                class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500">
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" id="submit-btn" class="w-full bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-extrabold text-sm py-3.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
+        <button type="submit" id="submit-btn"
+            class="w-full bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-extrabold text-sm py-3.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
             <span>現場の声を送信する</span>
             <span class="text-base">📨</span>
         </button>
@@ -139,9 +160,11 @@
 </div>
 
 <!-- Modal: Success Confirmation -->
-<div id="success-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-modal flex items-center justify-center p-4 hidden">
+<div id="success-modal"
+    class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-modal flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl border border-slate-100">
-        <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto">
+        <div
+            class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto">
             ✓
         </div>
         <div class="space-y-1.5">
@@ -152,10 +175,12 @@
             </p>
         </div>
         <div class="space-y-2 pt-2">
-            <button onclick="closeLiffOrHome()" class="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold text-xs py-3 rounded-xl transition-colors">
+            <button onclick="closeLiffOrHome()"
+                class="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold text-xs py-3 rounded-xl transition-colors">
                 LINEトークに戻る
             </button>
-            <button onclick="dismissModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs py-2.5 rounded-xl transition-colors">
+            <button onclick="dismissModal()"
+                class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs py-2.5 rounded-xl transition-colors">
                 フォームに戻る
             </button>
         </div>
@@ -165,56 +190,56 @@
 
 {% block scripts %}
 <script>
-function previewImage(input) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('preview-img').src = e.target.result;
-            document.getElementById('file-name').innerText = '添付中: ' + input.files[0].name;
-            document.getElementById('image-preview').classList.remove('hidden');
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('preview-img').src = e.target.result;
+                document.getElementById('file-name').innerText = '添付中: ' + input.files[0].name;
+                document.getElementById('image-preview').classList.remove('hidden');
+            }
+            reader.readAsDataURL(input.files[0]);
         }
-        reader.readAsDataURL(input.files[0]);
     }
-}
 
-const form = document.getElementById('issue-form');
-const alertBox = document.getElementById('status-alert');
-const submitBtn = document.getElementById('submit-btn');
-const successModal = document.getElementById('success-modal');
+    const form = document.getElementById('issue-form');
+    const alertBox = document.getElementById('status-alert');
+    const submitBtn = document.getElementById('submit-btn');
+    const successModal = document.getElementById('success-modal');
 
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span>送信中...</span>';
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>送信中...</span>';
 
-    const formData = new FormData(form);
+        const formData = new FormData(form);
 
-    try {
-        const res = await fetch('/api/issues', {
-            method: 'POST',
-            body: formData
-        });
-        const result = await res.json();
-        
-        if (res.ok) {
-            form.reset();
-            document.getElementById('image-preview').classList.add('hidden');
-            successModal.classList.remove('hidden');
-        } else {
-            throw new Error(result.detail || '送信に失敗しました');
+        try {
+            const res = await fetch('/api/issues', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await res.json();
+
+            if (res.ok) {
+                form.reset();
+                document.getElementById('image-preview').classList.add('hidden');
+                successModal.classList.remove('hidden');
+            } else {
+                throw new Error(result.detail || '送信に失敗しました');
+            }
+        } catch (err) {
+            alertBox.className = 'block p-3.5 rounded-xl text-xs font-bold bg-red-100 text-red-800 border border-red-300';
+            alertBox.innerText = 'エラーが発生しました：' + err.message;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>現場の声を送信する</span><span class="text-base">📨</span>';
         }
-    } catch (err) {
-        alertBox.className = 'block p-3.5 rounded-xl text-xs font-bold bg-red-100 text-red-800 border border-red-300';
-        alertBox.innerText = 'エラーが発生しました：' + err.message;
-        window.scrollTo({top: 0, behavior: 'smooth'});
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<span>現場の声を送信する</span><span class="text-base">📨</span>';
-    }
-});
+    });
 
-function dismissModal() {
-    successModal.classList.add('hidden');
-}
+    function dismissModal() {
+        successModal.classList.add('hidden');
+    }
 </script>
 {% endblock %}
