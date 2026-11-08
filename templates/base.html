@@ -86,24 +86,37 @@
         </div>
     </footer>
 
-    <!-- Universal LIFF Close Script -->
+    <!-- Universal Close & Fallback Script -->
     <script>
         function closeLiffOrHome() {
-            if (typeof liff !== 'undefined' && liff.isInClient && liff.isInClient()) {
-                liff.closeWindow();
-            } else if (window.history.length > 1) {
+            try {
+                if (typeof liff !== 'undefined' && liff.isLoggedIn && liff.isInClient && liff.isInClient()) {
+                    liff.closeWindow();
+                    return;
+                }
+            } catch (e) {
+                console.log('liff close fallback:', e);
+            }
+            if (window.history.length > 1) {
                 window.location.href = '/';
             } else {
                 window.close();
             }
         }
 
-        // Initialize LIFF if available
+        // Initialize LIFF safely without blocking page rendering
         document.addEventListener('DOMContentLoaded', () => {
-            if (typeof liff !== 'undefined') {
-                liff.init({ liffId: "{{ settings.LIFF_ID if settings else '' }}" }).catch((err) => {
-                    console.log('LIFF initialization bypass or fallback:', err);
-                });
+            const liffId = "{{ settings.LIFF_ID if settings and settings.LIFF_ID else '' }}";
+            if (typeof liff !== 'undefined' && liffId && !liffId.includes('xxxx')) {
+                try {
+                    liff.init({ liffId: liffId }).catch((err) => {
+                        console.warn('LIFF init warning (regular web view active):', err);
+                    });
+                } catch (e) {
+                    console.warn('LIFF init bypass:', e);
+                }
+            } else {
+                console.log('Direct Web view mode active.');
             }
         });
     </script>

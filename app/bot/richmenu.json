@@ -17,7 +17,7 @@
       "action": {
         "type": "uri",
         "label": "重点政策10選",
-        "uri": "https://liff.line.me/{LIFF_ID}/policies"
+        "uri": "{BASE_URL}/policies"
       }
     },
     {
@@ -56,7 +56,7 @@
       "action": {
         "type": "uri",
         "label": "地域の困りごと投稿",
-        "uri": "https://liff.line.me/{LIFF_ID}/issues"
+        "uri": "{BASE_URL}/issues"
       }
     },
     {
@@ -69,7 +69,7 @@
       "action": {
         "type": "uri",
         "label": "プロフィール・理念",
-        "uri": "https://liff.line.me/{LIFF_ID}/profile"
+        "uri": "{BASE_URL}/profile"
       }
     },
     {
@@ -82,7 +82,7 @@
       "action": {
         "type": "uri",
         "label": "サポーター登録",
-        "uri": "https://liff.line.me/{LIFF_ID}/supporters"
+        "uri": "{BASE_URL}/supporters"
       }
     }
   ]
