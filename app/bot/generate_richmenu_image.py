@@ -37,52 +37,52 @@ def generate_universal_richmenu(output_path="static/images/richmenu.png"):
     col_w = width // 3
     row_h = height // 2
 
-    # Tile definitions: 2-line structure for perfect horizontal padding
+    # Tile definitions: Shortened labels for maximum senior readability and font size
     tiles = [
         {
             "row": 0, "col": 0,
-            "lines": ["政策"],                 # 2文字特大1行
-            "sub": "安心を守る重点10選",
-            "sub_color": "#FDE047",           # 高視認性イエロー
+            "lines": ["政策"],                 # 130pt
+            "sub": "重点10選",
+            "sub_color": "#FDE047",           # 高視認性イエロー (約85pt)
             "bg": "#1A2B4C",                 # ディープネイビー
             "border": "#38BDF8"
         },
         {
             "row": 0, "col": 1,
-            "lines": ["AI源太に", "聞く"],     # 2行
-            "sub": "24時間いつでも対話受付",
+            "lines": ["AI源太に", "聞く"],     # 110pt
+            "sub": "24時間対話",              # 約80pt
             "sub_color": "#FFFFFF",
             "bg": "#059669",                 # エメラルドグリーン
             "border": "#34D399"
         },
         {
             "row": 0, "col": 2,
-            "lines": ["動画を", "見る"],       # 2行
-            "sub": "YouTube公式",            # （全5本）を削除
+            "lines": ["動画を", "見る"],       # 110pt
+            "sub": "YouTube",                # 白・約85pt
             "sub_color": "#FFFFFF",
             "bg": "#DC2626",                 # クリムゾンレッド
             "border": "#F87171"
         },
         {
             "row": 1, "col": 0,
-            "lines": ["まちの", "困りごと"],   # 2行
-            "sub": "道路・水路の写真を送る",
+            "lines": ["まちの", "困りごと"],   # 110pt
+            "sub": "写真を送る",              # 約85pt
             "sub_color": "#FFFFFF",
             "bg": "#D97706",                 # アンバーオレンジ
             "border": "#FBBF24"
         },
         {
             "row": 1, "col": 1,
-            "lines": ["阪口源太", "とは？"],   # 2行
-            "sub": "青郷出身・東大松尾研",
+            "lines": ["阪口源太", "とは？"],   # 110pt
+            "sub": "経歴と実績",              # 黄・約85pt
             "sub_color": "#FDE047",           # 高視認性イエロー
             "bg": "#2563EB",                 # ロイヤルブルー
             "border": "#818CF8"
         },
         {
             "row": 1, "col": 2,
-            "lines": ["応援・", "仲間入り"],   # 2行
-            "sub": "チラシ受取・サポーター募集",
+            "lines": ["応援・", "仲間入り"],   # 110pt
+            "sub": "後援会受付",              # 約85pt
             "sub_color": "#FFFFFF",
             "bg": "#0D9488",                 # ティール
             "border": "#2DD4BF"
@@ -105,8 +105,8 @@ def generate_universal_richmenu(output_path="static/images/richmenu.png"):
             print(f"[INFO] Using Font: {f}")
             break
 
-    # Maximum allowed width per line to guarantee ~60px side margins
-    max_text_width = col_w - 130 # approx 700px width limit
+    # Maximum allowed width per line to guarantee ~60px side margins (approx 700px width limit)
+    max_text_width = col_w - 130
 
     for tile in tiles:
         x0 = tile["col"] * col_w
@@ -126,15 +126,16 @@ def generate_universal_richmenu(output_path="static/images/richmenu.png"):
 
         lines = tile["lines"]
         if len(lines) == 1:
-            # Single line (e.g. 政策): Centered at 130pt
-            draw_auto_fit_text(draw, lines[0], selected_font_path, max_size=130, max_width=max_text_width, cx=cx, y=cy - 60, fill="#ffffff")
+            # Single line (政策): 130pt, vertically balanced with large subtext
+            draw_auto_fit_text(draw, lines[0], selected_font_path, max_size=130, max_width=max_text_width, cx=cx, y=cy - 90, fill="#ffffff")
         else:
-            # Two lines: Stacked with balanced line spacing
-            draw_auto_fit_text(draw, lines[0], selected_font_path, max_size=112, max_width=max_text_width, cx=cx, y=cy - 125, fill="#ffffff")
-            draw_auto_fit_text(draw, lines[1], selected_font_path, max_size=112, max_width=max_text_width, cx=cx, y=cy + 5, fill="#ffffff")
+            # Two lines: 110pt, stacked with clean line spacing
+            draw_auto_fit_text(draw, lines[0], selected_font_path, max_size=110, max_width=max_text_width, cx=cx, y=cy - 145, fill="#ffffff")
+            draw_auto_fit_text(draw, lines[1], selected_font_path, max_size=110, max_width=max_text_width, cx=cx, y=cy - 20, fill="#ffffff")
 
-        # Subtitle: Positioned cleanly below with safe margins
-        draw_auto_fit_text(draw, tile["sub"], selected_font_path, max_size=52, max_width=max_text_width, cx=cx, y=cy + 175, fill=tile["sub_color"])
+        # Subtitle: Target 80~85pt (Auto-fit within max_text_width)
+        sub_target_size = 80 if tile["sub"] == "24時間対話" else 85
+        draw_auto_fit_text(draw, tile["sub"], selected_font_path, max_size=sub_target_size, max_width=max_text_width, cx=cx, y=cy + 165, fill=tile["sub_color"])
 
     # High-contrast white grid separator lines (10px thickness)
     line_color = "#ffffff"
