@@ -58,7 +58,7 @@ def generate_universal_richmenu(output_path="static/images/richmenu.png"):
         {
             "row": 0, "col": 2,
             "lines": ["動画を", "見る"],       # 2行
-            "sub": "YouTube公式（全5本）",
+            "sub": "YouTube公式",            # （全5本）を削除
             "sub_color": "#FFFFFF",
             "bg": "#DC2626",                 # クリムゾンレッド
             "border": "#F87171"
