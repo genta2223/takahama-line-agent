@@ -1,0 +1,89 @@
+{
+  "size": {
+    "width": 2500,
+    "height": 1686
+  },
+  "selected": true,
+  "name": "阪口源太 公式リッチメニュー",
+  "chatBarText": "メニューを開く",
+  "areas": [
+    {
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 833,
+        "height": 843
+      },
+      "action": {
+        "type": "uri",
+        "label": "重点政策10選",
+        "uri": "https://liff.line.me/{LIFF_ID}/policies"
+      }
+    },
+    {
+      "bounds": {
+        "x": 833,
+        "y": 0,
+        "width": 834,
+        "height": 843
+      },
+      "action": {
+        "type": "message",
+        "label": "AI源太に相談",
+        "text": "阪口さん、こんにちは！高浜町の政策や地域の課題について教えてください。"
+      }
+    },
+    {
+      "bounds": {
+        "x": 1667,
+        "y": 0,
+        "width": 833,
+        "height": 843
+      },
+      "action": {
+        "type": "uri",
+        "label": "高浜情報チャンネル",
+        "uri": "https://www.youtube.com/channel/UCUCd76D8HzM39gXQJHV1cfA"
+      }
+    },
+    {
+      "bounds": {
+        "x": 0,
+        "y": 843,
+        "width": 833,
+        "height": 843
+      },
+      "action": {
+        "type": "uri",
+        "label": "地域の困りごと投稿",
+        "uri": "https://liff.line.me/{LIFF_ID}/issues"
+      }
+    },
+    {
+      "bounds": {
+        "x": 833,
+        "y": 843,
+        "width": 834,
+        "height": 843
+      },
+      "action": {
+        "type": "uri",
+        "label": "プロフィール・理念",
+        "uri": "https://liff.line.me/{LIFF_ID}/profile"
+      }
+    },
+    {
+      "bounds": {
+        "x": 1667,
+        "y": 843,
+        "width": 833,
+        "height": 843
+      },
+      "action": {
+        "type": "uri",
+        "label": "サポーター登録",
+        "uri": "https://liff.line.me/{LIFF_ID}/supporters"
+      }
+    }
+  ]
+}
