@@ -48,3 +48,4 @@ SYSTEM_PROMPT_TEMPLATE = """あなたは福井県高浜町出身の元地方議�
 def get_system_prompt() -> str:
     knowledge = load_knowledge()
     return SYSTEM_PROMPT_TEMPLATE.format(knowledge=knowledge)
+
