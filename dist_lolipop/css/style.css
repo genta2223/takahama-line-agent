@@ -1,0 +1,74 @@
+/* ==========================================================================
+   阪口源太 公式Web / LIFF スタイルシート
+   高浜町の海と青葉山、信頼のネイビーを基調としたモダンデザイン
+   ========================================================================== */
+
+:root {
+  --color-primary: #1A2B4C;        /* ディープネイビー (安心・原発安全防衛) */
+  --color-primary-light: #243b67;
+  --color-accent-emerald: #10B981; /* エメラルドグリーン (地域活力・自然) */
+  --color-accent-orange: #F59E0B;  /* オレンジ (ぬくもり・注目) */
+  --color-bg-base: #F8FAFC;        /* オフホワイト・クリーン背景 */
+  --color-text-main: #0F172A;
+  --color-text-sub: #475569;
+}
+
+html, body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-main);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+
+/* スクロールバー非表示（モバイルビュー用） */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* リッチカードシャドウ */
+.card-elevation {
+  box-shadow: 0 4px 20px -2px rgba(26, 43, 76, 0.08), 0 2px 6px -1px rgba(26, 43, 76, 0.04);
+}
+
+.card-elevation-hover {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-elevation-hover:active {
+  transform: scale(0.985);
+  box-shadow: 0 2px 10px -2px rgba(26, 43, 76, 0.12);
+}
+
+/* ヒーローグラデーション */
+.gradient-navy {
+  background: linear-gradient(135deg, #1A2B4C 0%, #152238 60%, #0d1624 100%);
+}
+
+.gradient-emerald {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+}
+
+.gradient-orange {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+}
+
+/* バッジスタイル */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+/* モーダル背景ブラー */
+.backdrop-blur-modal {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}

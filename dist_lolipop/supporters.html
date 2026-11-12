@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>阪口源太 後援会サポーター登録・仲間入り</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            800: '#243b67',
+                            900: '#1A2B4C',
+                            950: '#101c33'
+                        },
+                        emerald: {
+                            500: '#10B981',
+                            600: '#059669',
+                            700: '#047857'
+                        },
+                        amber: {
+                            500: '#F59E0B',
+                            600: '#D97706'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- LINE Front-end Framework (LIFF) SDK -->
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/2.1/sdk.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
+    <!-- Header -->
+    <header class="bg-navy-900 text-white shadow-lg sticky top-0 z-40 border-b border-navy-800">
+        <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="./index.html" class="flex items-center space-x-2.5">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center font-extrabold text-white text-base shadow-sm">
+                    源
+                </div>
+                <div>
+                    <div class="flex items-center space-x-1.5">
+                        <h1 class="text-sm font-extrabold tracking-tight">阪口 源太</h1>
+                        <span class="text-[10px] text-slate-300 font-medium">後援会事務所</span>
+                    </div>
+                    <p class="text-[11px] text-emerald-400 font-semibold tracking-wide">安心な高浜を、次世代へ。</p>
+                </div>
+            </a>
+            <button onclick="closeLiffOrRedirect()" class="text-xs bg-navy-800 hover:bg-navy-700 text-slate-200 px-3 py-1.5 rounded-full border border-slate-600/50 flex items-center space-x-1 transition-colors">
+                <span>✕</span>
+                <span>閉じる</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-md mx-auto w-full px-4 py-5 space-y-6">
+<div class="space-y-5">
+    <!-- Header -->
+    <div class="gradient-emerald text-white p-5 rounded-2xl shadow-md space-y-1.5">
+        <div class="flex items-center space-x-1.5">
+            <span class="text-xl">🤝</span>
+            <h2 class="text-lg font-extrabold tracking-tight">阪口源太 後援会サポーター登録</h2>
+        </div>
+        <p class="text-xs text-emerald-50 leading-relaxed">
+            「安心な高浜を、次世代へ。」引き継ぐための草の根の活動です。町内にお住まいの方だけでなく、町外の同窓生や高浜を応援したい関係人口の皆様のご参加を心よりお待ちしております。（会費無料）
+        </p>
+    </div>
+
+    <!-- Alert / Toast -->
+    <div id="status-alert" class="hidden p-3.5 rounded-xl text-xs font-bold transition-all"></div>
+
+    <!-- Supporter Form -->
+    <form id="supporter-form" class="bg-white p-5 rounded-2xl border border-slate-200 card-elevation space-y-5">
+        <!-- 1. Support Menus (Checkboxes) -->
+        <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-800">
+                ① ご協力・応援いただける内容（複数選択可） <span class="text-red-500 font-bold">*</span>
+            </label>
+            <div class="space-y-2 pt-1 text-xs text-slate-700">
+                <label class="flex items-start p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-400 transition-colors">
+                    <input type="checkbox" name="support_type" value="討議資料（リーフレット）を受け取る・家族友人に配る" checked class="mt-0.5 rounded text-emerald-600 focus:ring-emerald-500 mr-2.5">
+                    <div>
+                        <span class="font-bold text-slate-900">📄 討議資料（リーフレット）の受取り・配布</span>
+                        <p class="text-[10px] text-slate-500 mt-0.5">最新の政策資料をご自宅へ郵送、またはご近所・ご友人へのお声がけ</p>
+                    </div>
+                </label>
+
+                <label class="flex items-start p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-400 transition-colors">
+                    <input type="checkbox" name="support_type" value="自宅や田畑・駐車場に立て看板・ポスターを貼ってもよい" class="mt-0.5 rounded text-emerald-600 focus:ring-emerald-500 mr-2.5">
+                    <div>
+                        <span class="font-bold text-slate-900">🪧 立て看板（証票）・ポスターの掲示協力</span>
+                        <p class="text-[10px] text-slate-500 mt-0.5">ご自宅の壁、車庫、田畑、事務所等への看板（幅40cm×高130cm）掲示</p>
+                    </div>
+                </label>
+
+                <label class="flex items-start p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-400 transition-colors">
+                    <input type="checkbox" name="support_type" value="ポスティングや事務作業などボランティアに参加したい" class="mt-0.5 rounded text-emerald-600 focus:ring-emerald-500 mr-2.5">
+                    <div>
+                        <span class="font-bold text-slate-900">🏃 ポスティング・事務ボランティア</span>
+                        <p class="text-[10px] text-slate-500 mt-0.5">空き時間のポスティング、宛名貼り、イベント設営などのお手伝い</p>
+                    </div>
+                </label>
+
+                <label class="flex items-start p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-400 transition-colors">
+                    <input type="checkbox" name="support_type" value="「デジタルふるさと住民」として町外から高浜を応援したい" class="mt-0.5 rounded text-emerald-600 focus:ring-emerald-500 mr-2.5">
+                    <div>
+                        <span class="font-bold text-slate-900">🌐 デジタルふるさと住民（町外・同窓生）</span>
+                        <p class="text-[10px] text-slate-500 mt-0.5">高浜中卒業生や町外在住の方。SNS拡散、政策壁打ち、オンライン応援</p>
+                    </div>
+                </label>
+
+                <label class="flex items-start p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-400 transition-colors">
+                    <input type="checkbox" name="support_type" value="阪口源太とのミニ座談会・お話し会を開いてほしい" class="mt-0.5 rounded text-emerald-600 focus:ring-emerald-500 mr-2.5">
+                    <div>
+                        <span class="font-bold text-slate-900">☕ ミニ座談会・お話し会の開催希望</span>
+                        <p class="text-[10px] text-slate-500 mt-0.5">数名〜少人数の集まりやご自宅で、阪口源太と直接対話したい</p>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- 2. Personal Information -->
+        <div class="space-y-3.5 pt-2 border-t border-slate-200">
+            <div>
+                <label class="block text-xs font-bold text-slate-800 mb-1">
+                    お名前 <span class="text-red-500 font-bold">*</span>
+                </label>
+                <input type="text" name="name" required placeholder="例：高浜 太郎" class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 font-medium">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-800 mb-1">
+                    ご住所 <span class="text-red-500 font-bold">*</span>
+                </label>
+                <input type="text" name="address" required placeholder="例：福井県大飯郡高浜町横津海 〇〇番地（町外の方も可）" class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-800 mb-1">
+                    お電話番号 または メールアドレス <span class="text-red-500 font-bold">*</span>
+                </label>
+                <input type="text" name="contact" required placeholder="例：090-1234-5678、または メールアドレス" class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-800 mb-1">
+                    阪口源太への応援メッセージ・ご意見（任意）
+                </label>
+                <textarea name="message" rows="3" placeholder="期待する政策や地域の想いなど、温かいお言葉をいただけると大変励みになります。" class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 leading-relaxed"></textarea>
+            </div>
+        </div>
+
+        <!-- Legal Disclaimer -->
+        <p class="text-[10px] text-slate-400 leading-relaxed border-t border-slate-100 pt-3">
+            ※ご入力いただいた個人情報は、政治資金規正法及び後援会規約に則り厳重に管理し、後援会からの活動報告・政策資料送付以外の目的には一切使用いたしません。
+        </p>
+
+        <!-- Submit Button -->
+        <button type="submit" id="submit-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold text-sm py-3.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
+            <span>後援会サポーターに登録する</span>
+            <span class="text-base">✨</span>
+        </button>
+    </form>
+</div>
+
+<!-- Modal: Success Confirmation -->
+<div id="success-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-modal flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl border border-slate-100">
+        <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto">
+            ✓
+        </div>
+        <div class="space-y-1.5">
+            <h3 class="font-extrabold text-slate-900 text-base">ご登録ありがとうございました</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+                阪口源太後援会への温かいご参加に心より感謝申し上げます。<br>
+                後援会事務局より、活動報告および討議資料をお届けいたします。
+            </p>
+        </div>
+        <div class="space-y-2 pt-2">
+            <button onclick="closeLiffOrRedirect()" class="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold text-xs py-3 rounded-xl transition-colors">
+                LINEトークに戻る
+            </button>
+            <button onclick="dismissModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs py-2.5 rounded-xl transition-colors">
+                閉じる
+            </button>
+        </div>
+    </div>
+</div>
+    </main>
+
+    <!-- Footer with LINE Navigation -->
+    <footer class="bg-navy-950 text-slate-400 text-xs py-7 border-t border-navy-900 mt-auto">
+        <div class="max-w-md mx-auto px-4 text-center space-y-4">
+            <!-- Back to LINE action button -->
+            <div>
+                <button onclick="closeLiffOrRedirect()" class="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold py-3 px-4 rounded-xl border border-slate-700 flex items-center justify-center space-x-2 shadow-sm transition-all">
+                    <span>💬</span>
+                    <span>LINEトーク画面に戻る</span>
+                </button>
+            </div>
+
+            <!-- Supporter & Office Info -->
+            <div class="space-y-1 text-slate-400 text-[11px]">
+                <p class="font-bold text-slate-300">阪口源太 後援会事務所</p>
+                <p>福井県大飯郡高浜町 横津海（青郷地区・阪口商店前）</p>
+                <p class="text-[10px] text-slate-500 pt-1">
+                    ※本公式Web/LIFFは公職選挙法・政治資金規正法に則った政治活動・政策広報ツールです。
+                </p>
+            </div>
+            <p class="text-[10px] text-slate-600">© 2026-2027 Genta Sakaguchi Supporter Club.</p>
+        </div>
+    </footer>
+
+    <!-- Universal Close & Fallback Script -->
+    <script>
+        function closeLiffOrRedirect() {
+            try {
+                if (typeof liff !== 'undefined' && liff.isInClient && liff.isInClient()) {
+                    liff.closeWindow();
+                    return;
+                }
+            } catch (e) {
+                console.warn("LIFF close failed:", e);
+            }
+            window.location.href = "https://line.me/R/oaMessage/@078lejir";
+        }
+
+        // Initialize LIFF safely
+        document.addEventListener('DOMContentLoaded', () => {
+            const liffId = "2006733222-7qNnwwzR";
+            if (typeof liff !== 'undefined' && liffId && !liffId.includes('xxxx')) {
+                try {
+                    liff.init({ liffId: liffId }).catch((err) => {
+                        console.warn('LIFF init warning:', err);
+                    });
+                } catch (e) {
+                    console.warn('LIFF init bypass:', e);
+                }
+            }
+        });
+    </script>
+<script>
+    const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxRH-6fQfevgFSVPwVC-jhs2VG6q6eLf76EAIkAC1_6GQNArTJ4Gzp_IVjJcqrdMtub/exec";
+
+    const form = document.getElementById('supporter-form');
+    const alertBox = document.getElementById('status-alert');
+    const submitBtn = document.getElementById('submit-btn');
+    const successModal = document.getElementById('success-modal');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>送信中...</span>';
+
+        const supports = [];
+        form.querySelectorAll('input[name="support_type"]:checked').forEach(cb => supports.push(cb.value));
+
+        if (supports.length === 0) {
+            alert('応援メニューを1つ以上選択してください。');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>後援会サポーターに登録する</span><span class="text-base">✨</span>';
+            return;
+        }
+
+        const payload = {
+            type: "supporter",
+            name: form.querySelector('[name="name"]').value,
+            contact: form.querySelector('[name="contact"]').value,
+            address: form.querySelector('[name="address"]').value || '',
+            menus: supports,
+            message: form.querySelector('[name="message"]').value || '',
+            timestamp: new Date().toISOString()
+        };
+
+        try {
+            await fetch(GAS_WEBHOOK_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "text/plain" },
+                body: JSON.stringify(payload)
+            });
+
+            form.reset();
+            successModal.classList.remove('hidden');
+        } catch (err) {
+            alertBox.className = 'block p-3.5 rounded-xl text-xs font-bold bg-red-100 text-red-800 border border-red-300';
+            alertBox.innerText = 'エラーが発生しました：' + err.message;
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>後援会サポーターに登録する</span><span class="text-base">✨</span>';
+        }
+    });
+
+    function dismissModal() {
+        successModal.classList.add('hidden');
+    }
+</script>
+</body>
+</html>

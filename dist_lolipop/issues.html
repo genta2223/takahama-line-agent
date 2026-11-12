@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>まちの困りごと・現場通報｜阪口源太 公式情報</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            800: '#243b67',
+                            900: '#1A2B4C',
+                            950: '#101c33'
+                        },
+                        emerald: {
+                            500: '#10B981',
+                            600: '#059669',
+                            700: '#047857'
+                        },
+                        amber: {
+                            500: '#F59E0B',
+                            600: '#D97706'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- LINE Front-end Framework (LIFF) SDK -->
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/2.1/sdk.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
+    <!-- Header -->
+    <header class="bg-navy-900 text-white shadow-lg sticky top-0 z-40 border-b border-navy-800">
+        <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="./index.html" class="flex items-center space-x-2.5">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center font-extrabold text-white text-base shadow-sm">
+                    源
+                </div>
+                <div>
+                    <div class="flex items-center space-x-1.5">
+                        <h1 class="text-sm font-extrabold tracking-tight">阪口 源太</h1>
+                        <span class="text-[10px] text-slate-300 font-medium">後援会事務所</span>
+                    </div>
+                    <p class="text-[11px] text-emerald-400 font-semibold tracking-wide">安心な高浜を、次世代へ。</p>
+                </div>
+            </a>
+            <button onclick="closeLiffOrRedirect()" class="text-xs bg-navy-800 hover:bg-navy-700 text-slate-200 px-3 py-1.5 rounded-full border border-slate-600/50 flex items-center space-x-1 transition-colors">
+                <span>✕</span>
+                <span>閉じる</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-md mx-auto w-full px-4 py-5 space-y-6">
+<div class="space-y-5">
+    <!-- Header -->
+    <div class="gradient-orange text-white p-5 rounded-2xl shadow-md space-y-1.5">
+        <div class="flex items-center space-x-1.5">
+            <span class="text-xl">🚨</span>
+            <h2 class="text-lg font-extrabold tracking-tight">地域の困りごと・現場通報</h2>
+        </div>
+        <p class="text-xs text-amber-50 leading-relaxed">
+            道路の穴・陥没、側溝の詰まり、見通しの悪い交差点、鳥獣害など、現場の危険を写真とともにお知らせください。阪口源太本人が現地に急行し、調査・議会提言へ繋げます。
+        </p>
+    </div>
+
+    <!-- Alert / Toast -->
+    <div id="status-alert" class="hidden p-3.5 rounded-xl text-xs font-bold transition-all"></div>
+
+    <!-- Form -->
+    <form id="issue-form" enctype="multipart/form-data"
+        class="bg-white p-5 rounded-2xl border border-slate-200 card-elevation space-y-5">
+        <!-- 1. District Selection -->
+        <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-800">
+                ① 地区・集落名 <span class="text-red-500 font-bold">*</span>
+            </label>
+            <select name="district" required
+                class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 font-medium">
+                <option value="">選択してください</option>
+                <optgroup label="青郷地区（せいきょう）">
+                    <option value="青郷（横津海）">青郷（横津海 / よこつみ）</option>
+                    <option value="青郷（日置）">青郷（日置 / ひき）</option>
+                    <option value="青郷（青）">青郷（青 / あお）</option>
+                    <option value="青郷（六路谷）">青郷（六路谷 / ろくろだに）</option>
+                    <option value="青郷（三松）">青郷（三松 / みつまつ）</option>
+                    <option value="青郷（関屋）">青郷（関屋 / せきや）</option>
+                    <option value="青郷（高野）">青郷（高野 / たかの）</option>
+                    <option value="青郷（中山）">青郷（中山 / なかやま）</option>
+                    <option value="青郷（その他）">青郷（その他地区）</option>
+                </optgroup>
+                <optgroup label="高浜地区">
+                    <option value="高浜（薗部）">高浜（薗部 / そのべ）</option>
+                    <option value="高浜（塩土）">高浜（塩土 / しおつち）</option>
+                    <option value="高浜（事代）">高浜（事代 / ことしろ）</option>
+                    <option value="高浜（立石）">高浜（立石 / たていし）</option>
+                    <option value="高浜（中央）">高浜（中央・本町等）</option>
+                    <option value="高浜（その他）">高浜（その他）</option>
+                </optgroup>
+                <optgroup label="和田・内浦・その他">
+                    <option value="和田地区">和田地区（わだ）</option>
+                    <option value="内浦地区">内浦地区（うちうら）</option>
+                    <option value="町内その他">その他町内エリア</option>
+                </optgroup>
+            </select>
+        </div>
+
+        <!-- 2. Category (Badges/Radio) -->
+        <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-800">
+                ② 困りごとの種類 <span class="text-red-500 font-bold">*</span>
+            </label>
+            <div class="grid grid-cols-2 gap-2" id="category-group">
+                <label
+                    class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
+                    <input type="radio" name="category" value="道路・踏切・交通の危険" required
+                        class="text-amber-600 focus:ring-amber-500 mr-2">
+                    <span class="text-[11px] font-bold text-slate-800">🚦 道路・踏切・交通</span>
+                </label>
+                <label
+                    class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
+                    <input type="radio" name="category" value="水路・排水・冠水" required
+                        class="text-amber-600 focus:ring-amber-500 mr-2">
+                    <span class="text-[11px] font-bold text-slate-800">🌊 水路・排水・冠水</span>
+                </label>
+                <label
+                    class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
+                    <input type="radio" name="category" value="除草・倒木・街路樹" required
+                        class="text-amber-600 focus:ring-amber-500 mr-2">
+                    <span class="text-[11px] font-bold text-slate-800">🌲 除草・倒木・樹木</span>
+                </label>
+                <label
+                    class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
+                    <input type="radio" name="category" value="鳥獣害（イノシシ・シカ等）" required
+                        class="text-amber-600 focus:ring-amber-500 mr-2">
+                    <span class="text-[11px] font-bold text-slate-800">🐗 鳥獣害（イノシシ等）</span>
+                </label>
+                <label
+                    class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
+                    <input type="radio" name="category" value="高齢者の移動・交通の足" required
+                        class="text-amber-600 focus:ring-amber-500 mr-2">
+                    <span class="text-[11px] font-bold text-slate-800">🚌 高齢者の足・バス</span>
+                </label>
+                <label
+                    class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-amber-50 hover:border-amber-400 transition-colors">
+                    <input type="radio" name="category" value="その他生活相談" required
+                        class="text-amber-600 focus:ring-amber-500 mr-2">
+                    <span class="text-[11px] font-bold text-slate-800">💬 その他生活相談</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- 3. Photo Upload -->
+        <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-800">
+                ③ 現場の写真（スマホで撮影・添付）
+            </label>
+            <div class="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer relative"
+                onclick="document.getElementById('photo-input').click()">
+                <div class="space-y-1 text-slate-600">
+                    <span class="text-2xl">📸</span>
+                    <p class="text-xs font-bold">写真をタップして選択または撮影</p>
+                    <p class="text-[10px] text-slate-400">※最大10MB（JPEG, PNG等）</p>
+                </div>
+                <input type="file" id="photo-input" name="photo" accept="image/*" class="hidden"
+                    onchange="previewImage(this)">
+                <div id="image-preview" class="hidden mt-3">
+                    <img id="preview-img" class="max-h-40 mx-auto rounded-lg border border-slate-200 shadow-sm" src="#"
+                        alt="プレビュー">
+                    <p id="file-name" class="text-[10px] text-emerald-700 font-bold mt-1"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Location Details -->
+        <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-800">
+                ④ 現場の詳しい場所・目印
+            </label>
+            <input type="text" name="location" placeholder="例：〇〇寺の北側水路、国道27号〇〇交差点付近"
+                class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500">
+        </div>
+
+        <!-- 5. Issue Description -->
+        <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-800">
+                ⑤ 困りごと・状況の詳細 <span class="text-red-500 font-bold">*</span>
+            </label>
+            <textarea name="description" rows="4" required placeholder="雨の日の冠水状況、夜間の見通しの悪さ、歩行者の危険などをご自由にお聞かせください。"
+                class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 leading-relaxed"></textarea>
+        </div>
+
+        <!-- 6. Reporter Info (Optional) -->
+        <div class="pt-2 border-t border-slate-200 space-y-1.5">
+            <label class="block text-xs font-bold text-slate-800">
+                ⑥ お名前・連絡先（任意入力・匿名可）
+            </label>
+            <input type="text" name="reporter_name" placeholder="匿名でも送信いただけます（例：青郷住民、〇〇地区住民）"
+                class="w-full text-xs p-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="submit-btn"
+            class="w-full bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-extrabold text-sm py-3.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
+            <span>現場の声を送信する</span>
+            <span class="text-base">📨</span>
+        </button>
+    </form>
+</div>
+
+<!-- Modal: Success Confirmation -->
+<div id="success-modal"
+    class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-modal flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl border border-slate-100">
+        <div
+            class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto">
+            ✓
+        </div>
+        <div class="space-y-1.5">
+            <h3 class="font-extrabold text-slate-900 text-base">ご通報ありがとうございました</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+                いただいた内容は後援会事務所に即座に通知されました。<br>
+                阪口源太本人が現場を確認し、調査・町政への改善提案に全力で活かしてまいります。
+            </p>
+        </div>
+        <div class="space-y-2 pt-2">
+            <button onclick="closeLiffOrRedirect()"
+                class="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold text-xs py-3 rounded-xl transition-colors">
+                LINEトークに戻る
+            </button>
+            <button onclick="dismissModal()"
+                class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs py-2.5 rounded-xl transition-colors">
+                フォームに戻る
+            </button>
+        </div>
+    </div>
+</div>
+    </main>
+
+    <!-- Footer with LINE Navigation -->
+    <footer class="bg-navy-950 text-slate-400 text-xs py-7 border-t border-navy-900 mt-auto">
+        <div class="max-w-md mx-auto px-4 text-center space-y-4">
+            <!-- Back to LINE action button -->
+            <div>
+                <button onclick="closeLiffOrRedirect()" class="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold py-3 px-4 rounded-xl border border-slate-700 flex items-center justify-center space-x-2 shadow-sm transition-all">
+                    <span>💬</span>
+                    <span>LINEトーク画面に戻る</span>
+                </button>
+            </div>
+
+            <!-- Supporter & Office Info -->
+            <div class="space-y-1 text-slate-400 text-[11px]">
+                <p class="font-bold text-slate-300">阪口源太 後援会事務所</p>
+                <p>福井県大飯郡高浜町 横津海（青郷地区・阪口商店前）</p>
+                <p class="text-[10px] text-slate-500 pt-1">
+                    ※本公式Web/LIFFは公職選挙法・政治資金規正法に則った政治活動・政策広報ツールです。
+                </p>
+            </div>
+            <p class="text-[10px] text-slate-600">© 2026-2027 Genta Sakaguchi Supporter Club.</p>
+        </div>
+    </footer>
+
+    <!-- Universal Close & Fallback Script -->
+    <script>
+        function closeLiffOrRedirect() {
+            try {
+                if (typeof liff !== 'undefined' && liff.isInClient && liff.isInClient()) {
+                    liff.closeWindow();
+                    return;
+                }
+            } catch (e) {
+                console.warn("LIFF close failed:", e);
+            }
+            window.location.href = "https://line.me/R/oaMessage/@078lejir";
+        }
+
+        // Initialize LIFF safely
+        document.addEventListener('DOMContentLoaded', () => {
+            const liffId = "2006733222-7qNnwwzR";
+            if (typeof liff !== 'undefined' && liffId && !liffId.includes('xxxx')) {
+                try {
+                    liff.init({ liffId: liffId }).catch((err) => {
+                        console.warn('LIFF init warning:', err);
+                    });
+                } catch (e) {
+                    console.warn('LIFF init bypass:', e);
+                }
+            }
+        });
+    </script>
+<script>
+    const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxRH-6fQfevgFSVPwVC-jhs2VG6q6eLf76EAIkAC1_6GQNArTJ4Gzp_IVjJcqrdMtub/exec";
+
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('preview-img').src = e.target.result;
+                document.getElementById('file-name').innerText = '添付中: ' + input.files[0].name;
+                document.getElementById('image-preview').classList.remove('hidden');
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    const form = document.getElementById('issue-form');
+    const alertBox = document.getElementById('status-alert');
+    const submitBtn = document.getElementById('submit-btn');
+    const successModal = document.getElementById('success-modal');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>送信中（画像暗号化中）...</span>';
+
+        const district = form.querySelector('[name="district"]').value;
+        const categoryElem = form.querySelector('[name="category"]:checked');
+        const category = categoryElem ? categoryElem.value : "未選択";
+        const location = form.querySelector('[name="location"]').value || "未指定";
+        const description = form.querySelector('[name="description"]').value;
+        const reporterName = form.querySelector('[name="reporter_name"]').value || "匿名町民";
+
+        const photoInput = document.getElementById('photo-input');
+        let file = null;
+        let pureBase64 = "";
+
+        if (photoInput.files && photoInput.files[0]) {
+            file = photoInput.files[0];
+            try {
+                pureBase64 = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        const res = reader.result;
+                        const base64Index = res.indexOf(';base64,');
+                        if (base64Index !== -1) {
+                            resolve(res.substring(base64Index + 8));
+                        } else {
+                            resolve(res);
+                        }
+                    };
+                    reader.onerror = error => reject(error);
+                    reader.readAsDataURL(file);
+                });
+            } catch (err) {
+                console.error("Base64 conversion failed:", err);
+            }
+        }
+
+        const payload = {
+            type: "issue",
+            district: district,
+            category: category,
+            details: "【場所・目印】" + location + "\n【詳細】" + description,
+            image_name: file ? file.name : "",
+            image_mime: file ? file.type : "",
+            image_base64: pureBase64,
+            contact: reporterName,
+            timestamp: new Date().toISOString()
+        };
+
+        try {
+            await fetch(GAS_WEBHOOK_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "text/plain" },
+                body: JSON.stringify(payload)
+            });
+
+            // In no-cors mode, completion means request dispatched successfully
+            form.reset();
+            document.getElementById('image-preview').classList.add('hidden');
+            successModal.classList.remove('hidden');
+        } catch (err) {
+            alertBox.className = 'block p-3.5 rounded-xl text-xs font-bold bg-red-100 text-red-800 border border-red-300';
+            alertBox.innerText = 'エラーが発生しました：' + err.message;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>現場の声を送信する</span><span class="text-base">📨</span>';
+        }
+    });
+
+    function dismissModal() {
+        successModal.classList.add('hidden');
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>重点政策10選｜討議資料v3ダイジェスト - 阪口源太</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            800: '#243b67',
+                            900: '#1A2B4C',
+                            950: '#101c33'
+                        },
+                        emerald: {
+                            500: '#10B981',
+                            600: '#059669',
+                            700: '#047857'
+                        },
+                        amber: {
+                            500: '#F59E0B',
+                            600: '#D97706'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- LINE Front-end Framework (LIFF) SDK -->
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/2.1/sdk.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
+    <!-- Header -->
+    <header class="bg-navy-900 text-white shadow-lg sticky top-0 z-40 border-b border-navy-800">
+        <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="./index.html" class="flex items-center space-x-2.5">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center font-extrabold text-white text-base shadow-sm">
+                    源
+                </div>
+                <div>
+                    <div class="flex items-center space-x-1.5">
+                        <h1 class="text-sm font-extrabold tracking-tight">阪口 源太</h1>
+                        <span class="text-[10px] text-slate-300 font-medium">後援会事務所</span>
+                    </div>
+                    <p class="text-[11px] text-emerald-400 font-semibold tracking-wide">安心な高浜を、次世代へ。</p>
+                </div>
+            </a>
+            <button onclick="closeLiffOrRedirect()" class="text-xs bg-navy-800 hover:bg-navy-700 text-slate-200 px-3 py-1.5 rounded-full border border-slate-600/50 flex items-center space-x-1 transition-colors">
+                <span>✕</span>
+                <span>閉じる</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-md mx-auto w-full px-4 py-5 space-y-6">
+<div class="space-y-5">
+    <!-- Header Hero -->
+    <div class="gradient-navy text-white p-5 rounded-2xl shadow-md border border-slate-700/50 space-y-2">
+        <div class="flex items-center space-x-2">
+            <span class="badge-pill bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">討議資料v3改訂</span>
+            <span class="text-xs text-slate-300">2027年高浜町議選政策</span>
+        </div>
+        <h2 class="text-xl font-extrabold tracking-tight">ハイブリッド型政治の実現</h2>
+        <p class="text-xs text-slate-200 leading-relaxed">
+            保守・シニア層が望む「町政の安定継続（80%の安心）」と、現役・若手層が期待する「停滞感の打破（20%の独自性）」を高度に融合した政策パッケージです。
+        </p>
+    </div>
+
+    <!-- Tab Selector -->
+    <div class="flex p-1 bg-slate-200 rounded-xl space-x-1">
+        <button id="tab-80" onclick="switchTab('80')" class="flex-1 py-2.5 text-xs font-bold rounded-lg transition-all shadow-sm bg-white text-navy-900 border border-slate-300/50 flex items-center justify-center space-x-1">
+            <span>🛡️</span>
+            <span>安心・継続 (80%)</span>
+        </button>
+        <button id="tab-20" onclick="switchTab('20')" class="flex-1 py-2.5 text-xs font-bold rounded-lg transition-all text-slate-600 hover:text-navy-900 flex items-center justify-center space-x-1">
+            <span>💡</span>
+            <span>独自提案 (20%)</span>
+        </button>
+    </div>
+
+    <!-- Section: 80% 安心・継続（守り抜く5つの基盤） -->
+    <div id="content-80" class="space-y-3">
+        <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-xl">
+            <h3 class="font-bold text-xs text-blue-900 flex items-center space-x-1">
+                <span>🛡️</span>
+                <span>町政の良質な施策は100%肯定・後押し</span>
+            </h3>
+            <p class="text-[11px] text-blue-800 mt-0.5 leading-relaxed">
+                現町政や既存議会が進めてきた暮らしを守る施策を全力で堅持し、100億円基金とインフラを守り抜きます。
+            </p>
+        </div>
+
+        <div class="space-y-3">
+            <!-- 1. 子育て・教育 -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 card-elevation">
+                <div class="flex items-start space-x-3">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 font-extrabold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-1.5">
+                            <h4 class="font-bold text-sm text-slate-900">子育て・教育無償化の完全堅持</h4>
+                            <span class="badge-pill bg-blue-50 text-blue-700 text-[10px]">暮らし防衛</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            保育料や学校給食費の無償化など、高浜町が誇る手厚い子育て施策を全面的に支持し、将来にわたり絶対維持します。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 100億円基金 -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 card-elevation">
+                <div class="flex items-start space-x-3">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 font-extrabold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-1.5">
+                            <h4 class="font-bold text-sm text-slate-900">100億円基金の死守と厳格なIT監査</h4>
+                            <span class="badge-pill bg-amber-50 text-amber-800 text-[10px]">財政防衛</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            原発4基稼働等による町の貯金（全基金残高約100億円・住民1人約102万円）を、過大なハコモノ投資や不透明な追加工事契約から死守。将来の医療・福祉・インフラ修繕の財源として保全します。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 青郷・西のインフラ -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 card-elevation">
+                <div class="flex items-start space-x-3">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 font-extrabold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-1.5">
+                            <h4 class="font-bold text-sm text-slate-900">青郷・国道27号青葉改良と南山手線延伸</h4>
+                            <span class="badge-pill bg-blue-50 text-blue-700 text-[10px]">青郷重点</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            京都・舞鶴と直結する「たかはまの表玄関」として、青葉トンネル新設を国・県へ強く要請。豪雪・災害時の集落孤立を防ぐ「南山手線西側延伸構想」と六路谷踏切改良を前進させます。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 地域医療の死守 -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 card-elevation">
+                <div class="flex items-start space-x-3">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 font-extrabold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-1.5">
+                            <h4 class="font-bold text-sm text-slate-900">JCHO若狭高浜病院の診療体制維持</h4>
+                            <span class="badge-pill bg-blue-50 text-blue-700 text-[10px]">医療支援</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            町民の命を守る地域中核病院の常勤医師・看護師の確保を強力に支援。老朽化したMRI等の重要医療機器の計画的更新支援を継続し、医療崩壊を許しません。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 防災強靭化 -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 card-elevation">
+                <div class="flex items-start space-x-3">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 font-extrabold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">5</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-1.5">
+                            <h4 class="font-bold text-sm text-slate-900">避難所エアコン完備と半島部孤立防止</h4>
+                            <span class="badge-pill bg-blue-50 text-blue-700 text-[10px]">防災強化</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            小中学校体育館等すべての一次避難所へのエアコン配備・自家発電・非常食分散備蓄を完遂。内浦半島や沿岸集落の通信遮断・道路寸断に備えた衛星通信網を整備します。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section: 20% 独自提案（未来をひらく5つの提案） -->
+    <div id="content-20" class="space-y-3 hidden">
+        <div class="bg-emerald-50 border-l-4 border-emerald-600 p-3 rounded-r-xl">
+            <h3 class="font-bold text-xs text-emerald-900 flex items-center space-x-1">
+                <span>💡</span>
+                <span>東大松尾研等の知見 × 元地方議会議員の実務力</span>
+            </h3>
+            <p class="text-[11px] text-emerald-800 mt-0.5 leading-relaxed">
+                既存議員の死角を補い、人口減少への処方箋と行政の優しいデジタル変革（AX）を提示します。
+            </p>
+        </div>
+
+        <div class="space-y-3">
+            <!-- 6. 子育て出口戦略 -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 card-elevation">
+                <div class="flex items-start space-x-3">
+                    <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 font-extrabold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">6</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-1.5">
+                            <h4 class="font-bold text-sm text-slate-900">子育て無償化の「出口戦略」創出</h4>
+                            <span class="badge-pill bg-emerald-50 text-emerald-800 text-[10px]">若者Uターン</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            「注ぎ口はあるが出口から水が抜けるバケツ構造」を是正。手厚く育てた若者が町外へ流出したままにならないよう、実家の空き家改修・家財整理補助を大幅拡充し、テレワーク拠点やIT求人を受け皿として整備します。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. デジタルふるさと住民 -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 card-elevation">
+                <div class="flex items-start space-x-3">
+                    <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 font-extrabold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">7</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-1.5">
+                            <h4 class="font-bold text-sm text-slate-900">「デジタルふるさと住民」構想</h4>
+                            <span class="badge-pill bg-emerald-50 text-emerald-800 text-[10px]">関係人口創出</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            高浜中同窓生をはじめ町外で活躍する現役世代をオンライン組織化。特産品・ふるさと納税・副業プロジェクトから関わりを深め、段階的なUターン・Jターンへと繋ぎます。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. 行政AX -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 card-elevation">
+                <div class="flex items-start space-x-3">
+                    <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 font-extrabold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">8</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-1.5">
+                            <h4 class="font-bold text-sm text-slate-900">行政AX（対話を生むAI変革）</h4>
+                            <span class="badge-pill bg-emerald-50 text-emerald-800 text-[10px]">役場変革</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            役場の内部業務（起案・集計）を生成AIで自動化。目的は人員削減ではなく、職員が「断らない福祉相談（いぶき等）」や集落対話・現場確認にじっくり向き合える時間を生み出すことです。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. 迷わない窓口設計 -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 card-elevation">
+                <div class="flex items-start space-x-3">
+                    <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 font-extrabold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">9</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-1.5">
+                            <h4 class="font-bold text-sm text-slate-900">LINEや音声入力による「迷わない窓口」</h4>
+                            <span class="badge-pill bg-emerald-50 text-emerald-800 text-[10px]">シニア安心</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            ダウンロードされない専用アプリの乱立を排し、高齢者でも使い慣れた公式LINEや音声入力だけで予約・相談が完結する優しいデジタルUIを実現します。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. AIオンデマンド交通 -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 card-elevation">
+                <div class="flex items-start space-x-3">
+                    <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 font-extrabold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">10</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-1.5">
+                            <h4 class="font-bold text-sm text-slate-900">AIオンデマンド乗合交通・舞鶴連携</h4>
+                            <span class="badge-pill bg-emerald-50 text-emerald-800 text-[10px]">移動の足確保</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            免許返納後も孤立しないよう、AIによるリアルタイム配車・ルート最適化乗合交通を導入。隣接する京都府舞鶴市（通院・買い物・高校通学）との生活圏直通連携を強化します。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action Banner -->
+    <div class="p-4 rounded-xl bg-slate-100 border border-slate-200 text-center space-y-2">
+        <p class="text-xs font-bold text-slate-800">政策についてAI源太と直接対話してみませんか？</p>
+        <button onclick="closeLiffOrRedirect()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-lg shadow transition-colors">
+            LINEトークで質問してみる →
+        </button>
+    </div>
+</div>
+    </main>
+
+    <!-- Footer with LINE Navigation -->
+    <footer class="bg-navy-950 text-slate-400 text-xs py-7 border-t border-navy-900 mt-auto">
+        <div class="max-w-md mx-auto px-4 text-center space-y-4">
+            <!-- Back to LINE action button -->
+            <div>
+                <button onclick="closeLiffOrRedirect()" class="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold py-3 px-4 rounded-xl border border-slate-700 flex items-center justify-center space-x-2 shadow-sm transition-all">
+                    <span>💬</span>
+                    <span>LINEトーク画面に戻る</span>
+                </button>
+            </div>
+
+            <!-- Supporter & Office Info -->
+            <div class="space-y-1 text-slate-400 text-[11px]">
+                <p class="font-bold text-slate-300">阪口源太 後援会事務所</p>
+                <p>福井県大飯郡高浜町 横津海（青郷地区・阪口商店前）</p>
+                <p class="text-[10px] text-slate-500 pt-1">
+                    ※本公式Web/LIFFは公職選挙法・政治資金規正法に則った政治活動・政策広報ツールです。
+                </p>
+            </div>
+            <p class="text-[10px] text-slate-600">© 2026-2027 Genta Sakaguchi Supporter Club.</p>
+        </div>
+    </footer>
+
+    <!-- Universal Close & Fallback Script -->
+    <script>
+        function closeLiffOrRedirect() {
+            try {
+                if (typeof liff !== 'undefined' && liff.isInClient && liff.isInClient()) {
+                    liff.closeWindow();
+                    return;
+                }
+            } catch (e) {
+                console.warn("LIFF close failed:", e);
+            }
+            window.location.href = "https://line.me/R/oaMessage/@078lejir";
+        }
+
+        // Initialize LIFF safely
+        document.addEventListener('DOMContentLoaded', () => {
+            const liffId = "2006733222-7qNnwwzR";
+            if (typeof liff !== 'undefined' && liffId && !liffId.includes('xxxx')) {
+                try {
+                    liff.init({ liffId: liffId }).catch((err) => {
+                        console.warn('LIFF init warning:', err);
+                    });
+                } catch (e) {
+                    console.warn('LIFF init bypass:', e);
+                }
+            }
+        });
+    </script>
+<script>
+function switchTab(tab) {
+    const btn80 = document.getElementById('tab-80');
+    const btn20 = document.getElementById('tab-20');
+    const sec80 = document.getElementById('content-80');
+    const sec20 = document.getElementById('content-20');
+
+    if (tab === '80') {
+        btn80.className = 'flex-1 py-2.5 text-xs font-bold rounded-lg transition-all shadow-sm bg-white text-navy-900 border border-slate-300/50 flex items-center justify-center space-x-1';
+        btn20.className = 'flex-1 py-2.5 text-xs font-bold rounded-lg transition-all text-slate-600 hover:text-navy-900 flex items-center justify-center space-x-1';
+        sec80.classList.remove('hidden');
+        sec20.classList.add('hidden');
+    } else {
+        btn20.className = 'flex-1 py-2.5 text-xs font-bold rounded-lg transition-all shadow-sm bg-white text-emerald-900 border border-slate-300/50 flex items-center justify-center space-x-1';
+        btn80.className = 'flex-1 py-2.5 text-xs font-bold rounded-lg transition-all text-slate-600 hover:text-navy-900 flex items-center justify-center space-x-1';
+        sec20.classList.remove('hidden');
+        sec80.classList.add('hidden');
+    }
+}
+</script>
+</body>
+</html>
