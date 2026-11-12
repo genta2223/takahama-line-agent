@@ -44,6 +44,10 @@ html, body {
 }
 
 /* ヒーローグラデーション */
+.gradient-hero {
+  background: #0f294a !important; /* 濃いディープネイビーで白文字の視認性を最優先 */
+}
+
 .gradient-navy {
   background: linear-gradient(135deg, #1A2B4C 0%, #152238 60%, #0d1624 100%);
 }

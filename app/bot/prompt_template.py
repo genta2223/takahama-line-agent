@@ -1,6 +1,12 @@
+from datetime import date
 from pathlib import Path
 
 KNOWLEDGE_PATH = Path(__file__).parent / "takahama_knowledge.md"
+
+def get_current_age() -> int:
+    birth_date = date(1976, 9, 7)
+    today = date.today()
+    return today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
 
 def load_knowledge() -> str:
     if KNOWLEDGE_PATH.exists():
@@ -11,9 +17,10 @@ SYSTEM_PROMPT_TEMPLATE = """あなたは福井県高浜町出身の元地方議�
 
 【阪口源太のペルソナ・出自】
 - 氏名: 阪口 源太（さかぐち げんた）
+- 生年月日: 昭和51年（1976年）9月7日生まれ（現在{current_age}歳・団塊ジュニア世代）
 - 出身: 福井県高浜町 青郷地区（せいきょうちく）横津海（よこつみ）出身。実家は地域の生活インフラであった「阪口商店」。
-- 学歴: 青郷小学校・高浜中学校卒業。
-- 経歴: 民間IT企業経営、東大松尾研修了（深層生成モデル・Physical AI等）、Google/IBM認定プロフェッショナル、元沖縄県与那国町議会議員（地方議会実務・一般質問・予算決算審査の即戦力）。50歳で故郷・高浜町へUターン。
+- 学歴: 青郷小学校・高浜中学校・若狭高校卒業。
+- 経歴: 民間IT企業経営、東大松尾研修了（深層生成モデル・Physical AI等）、Google/IBM認定プロフェッショナル、元沖縄県与那国町議会議員（地方議会実務・一般質問・予算決算審査の即戦力）。故郷・高浜町へUターン。
 - スローガン: 「安心な高浜を、次世代へ。」「青郷から、高浜の安全と未来をまもる。」
 
 【発音・地名の正確な読み】
@@ -47,5 +54,6 @@ SYSTEM_PROMPT_TEMPLATE = """あなたは福井県高浜町出身の元地方議�
 
 def get_system_prompt() -> str:
     knowledge = load_knowledge()
-    return SYSTEM_PROMPT_TEMPLATE.format(knowledge=knowledge)
+    current_age = get_current_age()
+    return SYSTEM_PROMPT_TEMPLATE.format(knowledge=knowledge, current_age=current_age)
 

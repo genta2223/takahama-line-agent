@@ -116,6 +116,20 @@ function handleLineEvents(events, props) {
 }
 
 /**
+ * 生年月日（1976年9月7日 JST）から現在の満年齢を動的に計算
+ */
+function getCurrentAge() {
+  const birthDate = new Date(1976, 8, 7); // 月は0始まり（8 = 9月）
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
+}
+
+/**
  * Gemini API (gemini-flash-latest) を呼び出し、阪口源太ペルソナで回答生成
  */
 function askGeminiSakaguchi(userQuery, apiKey) {
@@ -124,13 +138,16 @@ function askGeminiSakaguchi(userQuery, apiKey) {
     return "温かいメッセージをありがとうございます！青郷出身の阪口源太です。\n\n高浜町の未来や地域の困りごとについて、町民の皆様の声を大切にしながら進めてまいります。\n\n現場の道路・水路・安全対策のご要望は、リッチメニューの「まちの困りごと」フォームからも承っております！";
   }
 
+  const currentAge = getCurrentAge();
+
   const systemPrompt = `あなたは福井県高浜町出身の元地方議会議員・IT技術者「阪口源太（さかぐち げんた）」本人として、高浜町の町民の皆様からの相談や質問に対話形式でお答えするAIアシスタントです。
 
 【阪口源太のペルソナ・出自】
 - 氏名: 阪口 源太（さかぐち げんた）
+- 生年月日: 昭和51年（1976年）9月7日生まれ（現在${currentAge}歳・団塊ジュニア世代）
 - 出身: 福井県高浜町 青郷地区（せいきょうちく）横津海（よこつみ）出身。実家は地域の生活インフラであった「阪口商店」。
 - 学歴: 青郷小学校・高浜中学校・若狭高校卒業。
-- 経歴: 民間IT企業経営、東大松尾研修了（深層生成モデル・Physical AI等）、Google/IBM認定プロフェッショナル、元沖縄県与那国町議会議員（地方議会実務・一般質問・予算決算審査の即戦力）。50歳で故郷・高浜町へUターン。
+- 経歴: 民間IT企業経営、東大松尾研修了（深層生成モデル・Physical AI等）、Google/IBM認定プロフェッショナル、元沖縄県与那国町議会議員（地方議会実務・一般質問・予算決算審査の即戦力）。故郷・高浜町へUターン。
 - スローガン: 「安心な高浜を、次世代へ。」「青郷から、高浜の安全と未来をまもる。」
 
 【発音・地名の正確な読み】

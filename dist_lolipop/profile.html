@@ -71,11 +71,11 @@
         <div class="space-y-1">
             <span class="text-xs text-slate-500 font-bold">さかぐち げんた</span>
             <h2 class="text-2xl font-black text-slate-900 tracking-tight">阪口 源太</h2>
-            <p class="text-xs text-emerald-700 font-extrabold">福井県高浜町 青郷地区 横津海 出身（50歳）</p>
+            <p class="text-xs text-emerald-700 font-extrabold">福井県高浜町 青郷地区 横津海 出身（<span class="js-genta-age">50</span>歳）</p>
         </div>
         <p class="text-xs text-slate-600 leading-relaxed text-left bg-slate-50 p-3.5 rounded-xl border border-slate-200/60 font-medium">
             「安心な高浜を、次世代へ。」<br>
-            横津海の実家『阪口商店』で育ち、民間IT企業を創業・経営。東大松尾研等でAIの最前線を学び、元・沖縄県与那国町議会議員として地方議会の実務を経験。50歳を迎えた今、愛する故郷・高浜町のために持てるすべての知見と情熱を注ぎます。
+            横津海の実家『阪口商店』で育ち、民間IT企業を創業・経営。東大松尾研等でAIの最前線を学び、元・沖縄県与那国町議会議員として地方議会の実務を経験。<span class="js-genta-age">50</span>歳を迎えた今、愛する故郷・高浜町のために持てるすべての知見と情熱を注ぎます。
         </p>
     </div>
 
@@ -88,7 +88,7 @@
         <ul class="text-xs text-slate-700 space-y-2">
             <li class="flex items-start space-x-2">
                 <span class="text-emerald-600 font-bold">●</span>
-                <span><strong>昭和51年（1976年）生まれ:</strong> 50歳（団塊ジュニア世代）</span>
+                <span><strong>昭和51年（1976年）生まれ:</strong> <span class="js-genta-age">50</span>歳（団塊ジュニア世代）</span>
             </li>
             <li class="flex items-start space-x-2">
                 <span class="text-emerald-600 font-bold">●</span>
@@ -238,6 +238,22 @@
                 } catch (e) {
                     console.warn('LIFF init bypass:', e);
                 }
+            }
+
+            // Dynamic Age Calculation from Birthday: 1976-09-07 (JST)
+            try {
+                const birthDate = new Date(1976, 8, 7); // Month is 0-indexed: 8 = September
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                document.querySelectorAll('.js-genta-age').forEach(el => {
+                    el.textContent = age;
+                });
+            } catch (err) {
+                console.warn('Age calculation fallback:', err);
             }
         });
     </script>

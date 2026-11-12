@@ -127,6 +127,22 @@ def get_base_html(title, content, scripts=""):
                     console.warn('LIFF init bypass:', e);
                 }}
             }}
+
+            // Dynamic Age Calculation from Birthday: 1976-09-07 (JST)
+            try {{
+                const birthDate = new Date(1976, 8, 7); // Month is 0-indexed: 8 = September
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {{
+                    age--;
+                }}
+                document.querySelectorAll('.js-genta-age').forEach(el => {{
+                    el.textContent = age;
+                }});
+            }} catch (err) {{
+                console.warn('Age calculation fallback:', err);
+            }}
         }});
     </script>
 {scripts}
@@ -367,3 +383,4 @@ def generate():
 
 if __name__ == "__main__":
     generate()
+
