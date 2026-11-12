@@ -20,24 +20,42 @@ function getProps() {
 }
 
 /**
+ * 初回権限承認用のダミー関数
+ * ※GASエディタで「実行」を押して一度承認を完了させてください。
+ */
+function testAuth() {
+  console.log("外部通信(UrlFetchApp)とドライブ(DriveApp)の権限承認テストを実行します");
+  try {
+    const res = UrlFetchApp.fetch("https://httpbin.org/get", { muteHttpExceptions: true });
+    console.log("UrlFetchApp 疎通成功: " + res.getResponseCode());
+  } catch (e) {
+    console.error("UrlFetchApp エラー: " + e.toString());
+  }
+}
+
+/**
  * Webhook受信 (POSTリクエスト)
  */
 function doPost(e) {
   try {
     if (!e || !e.postData || !e.postData.contents) {
+      console.warn("doPost: No postData received");
       return ContentService.createTextOutput(JSON.stringify({ status: "error", message: "No post data" }))
         .setMimeType(ContentService.MimeType.JSON);
     }
 
-    const json = JSON.parse(e.postData.contents);
+    const rawContents = e.postData.contents;
+    console.log("doPost raw content length: " + rawContents.length);
+    const json = JSON.parse(rawContents);
     const props = getProps();
 
     // -------------------------------------------------------------
     // 分岐 1: LINE Messaging API Webhook (AI源太 チャット自動応答)
     // -------------------------------------------------------------
     if (json.events && Array.isArray(json.events)) {
+      console.log("doPost: Matched LINE Webhook (events count: " + json.events.length + ")");
       handleLineEvents(json.events, props);
-      return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", type: "line_events" }))
         .setMimeType(ContentService.MimeType.JSON);
     }
 
@@ -45,8 +63,9 @@ function doPost(e) {
     // 分岐 2: 現場困りごと通報フォーム (type: "issue")
     // -------------------------------------------------------------
     if (json.type === "issue") {
+      console.log("doPost: Matched Civic Issue Submission");
       handleIssueSubmission(json, props);
-      return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", type: "issue" }))
         .setMimeType(ContentService.MimeType.JSON);
     }
 
@@ -54,16 +73,18 @@ function doPost(e) {
     // 分岐 3: 後援会サポーター登録フォーム (type: "supporter")
     // -------------------------------------------------------------
     if (json.type === "supporter") {
+      console.log("doPost: Matched Supporter Registration");
       handleSupporterRegistration(json, props);
-      return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", type: "supporter" }))
         .setMimeType(ContentService.MimeType.JSON);
     }
 
+    console.warn("doPost: Ignored unknown payload type: " + JSON.stringify(json).slice(0, 150));
     return ContentService.createTextOutput(JSON.stringify({ status: "ignored", message: "Unknown payload type" }))
       .setMimeType(ContentService.MimeType.JSON);
 
   } catch (err) {
-    console.error("doPost Error: " + err.toString());
+    console.error("doPost Exception: " + err.toString());
     return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() }))
       .setMimeType(ContentService.MimeType.JSON);
   }
@@ -80,13 +101,16 @@ function handleLineEvents(events, props) {
       const userMessage = event.message.text.trim();
       const replyToken = event.replyToken;
 
-      console.log(`LINE Message: ${userMessage} (Token: ${replyToken})`);
+      console.log(`LINE Event [${i}]: text="${userMessage}", replyToken="${replyToken}"`);
       
       // Gemini APIでAI応答を生成
       const aiReply = askGeminiSakaguchi(userMessage, props.geminiApiKey);
+      console.log("AI Reply generated (length: " + aiReply.length + "): " + aiReply.slice(0, 80) + "...");
       
       // LINE Reply APIで返信
       replyToLine(replyToken, aiReply, props.lineAccessToken);
+    } else {
+      console.log(`LINE Event [${i}]: Skipped (type=${event.type})`);
     }
   }
 }
@@ -96,6 +120,7 @@ function handleLineEvents(events, props) {
  */
 function askGeminiSakaguchi(userQuery, apiKey) {
   if (!apiKey) {
+    console.warn("GEMINI_API_KEY is not set in Script Properties.");
     return "温かいメッセージをありがとうございます！青郷出身の阪口源太です。\n\n高浜町の未来や地域の困りごとについて、町民の皆様の声を大切にしながら進めてまいります。\n\n現場の道路・水路・安全対策のご要望は、リッチメニューの「まちの困りごと」フォームからも承っております！";
   }
 
@@ -132,6 +157,7 @@ function askGeminiSakaguchi(userQuery, apiKey) {
    AIで判断できない複雑な個別トラブル、境界問題、プライベートな陳情、または事実確認が必要な事象については、適当な回答を捏造せず、「大変重要かつ切実なご指摘をいただき、ありがとうございます。この件につきましては、私（阪口源太）本人が直接現場を確認し、調査・検討させていただきます。よろしければリッチメニューの『まちの困りごと』フォームから写真や詳細をお寄せいただくか、後援会事務所までご連絡いただければ幸いです」と丁寧に本人フォローへトスアップすること。
 5. 文字数: LINEのトーク画面で読みやすいよう、200〜400文字程度を目安に、要点を分かりやすく段落分けして回答すること。`;
 
+  // 確実に稼働する gemini-flash-latest を使用
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
   const payload = {
     system_instruction: {
@@ -154,15 +180,22 @@ function askGeminiSakaguchi(userQuery, apiKey) {
       muteHttpExceptions: true
     };
     const response = UrlFetchApp.fetch(url, options);
-    const data = JSON.parse(response.getContentText());
+    const code = response.getResponseCode();
+    const responseText = response.getContentText();
 
+    if (code !== 200) {
+      console.error(`Gemini API HTTP Error: status=${code}, body=${responseText.slice(0, 200)}`);
+      return "温かいメッセージをありがとうございます！青郷出身の阪口源太です。\n\n高浜町の未来や地域の困りごとについて、町民の皆様の声を大切にしながら進めてまいります。ご意見・ご要望はお気軽にどうぞ！";
+    }
+
+    const data = JSON.parse(responseText);
     if (data.candidates && data.candidates[0] && data.candidates[0].content) {
       return data.candidates[0].content.parts[0].text.trim();
     }
-    console.warn("Gemini unexpected response: " + response.getContentText());
+    console.warn("Gemini unexpected JSON response: " + responseText.slice(0, 150));
     return "温かいメッセージをありがとうございます！青郷出身の阪口源太です。\n\n高浜町の未来や地域の困りごとについて、町民の皆様の声を大切にしながら政策に反映させてまいります。ご意見・ご要望はお気軽にどうぞ！";
   } catch (err) {
-    console.error("Gemini API Error: " + err.toString());
+    console.error("Gemini API Exception: " + err.toString());
     return "メッセージをいただきありがとうございます。阪口源太です。\n\nただいま通信環境によりAI応答が一時的に繋がりにくくなっております。いただいた内容は記録しておりますので、私自身が確認し、活動の参考にさせていただきます！";
   }
 }
@@ -172,7 +205,7 @@ function askGeminiSakaguchi(userQuery, apiKey) {
  */
 function replyToLine(replyToken, messageText, channelAccessToken) {
   if (!channelAccessToken || !replyToken) {
-    console.warn("Missing LINE credentials or replyToken.");
+    console.warn("replyToLine: Missing channelAccessToken or replyToken");
     return;
   }
 
@@ -233,8 +266,18 @@ function replyToLine(replyToken, messageText, channelAccessToken) {
     muteHttpExceptions: true
   };
 
-  const res = UrlFetchApp.fetch(url, options);
-  console.log("LINE Reply Status: " + res.getResponseCode());
+  try {
+    const res = UrlFetchApp.fetch(url, options);
+    const code = res.getResponseCode();
+    const body = res.getContentText();
+    if (code !== 200) {
+      console.error(`LINE Reply API Error: status=${code}, body=${body}`);
+    } else {
+      console.log(`LINE Reply API Success: status=${code}`);
+    }
+  } catch (e) {
+    console.error("LINE Reply API Exception: " + e.toString());
+  }
 }
 
 // -----------------------------------------------------------------
