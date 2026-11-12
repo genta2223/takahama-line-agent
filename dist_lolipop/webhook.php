@@ -1,33 +1,50 @@
 <?php
 /**
  * LINE Messaging API Webhook Relay to Google Apps Script (GAS)
- * 
- * LINE Developers enforces HTTP 200 responses directly and does not follow
- * 302 redirects from Google Apps Script Web Apps.
- * This proxy script accepts LINE Webhook POST, follows redirects to GAS,
- * and always returns HTTP 200 OK to the LINE platform.
+ * Asynchronous response version:
+ * 1. Read input payload
+ * 2. Immediately flush HTTP 200 OK to LINE Platform
+ * 3. Forward payload to GAS in background with 302 redirect tracking
  */
 
 // Target Google Apps Script Web App URL
 define('GAS_WEBHOOK_URL', 'https://script.google.com/macros/s/AKfycbxRH-6fQfevgFSVPwVC-jhs2VG6q6eLf76EAIkAC1_6GQNArTJ4Gzp_IVjJcqrdMtub/exec');
 
-// Respond to GET or verification checks immediately
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(200);
-    echo "OK - LINE Webhook Relay is Running";
-    exit;
-}
-
-// Read raw JSON body from LINE platform
+// Read raw body from LINE platform
 $rawBody = file_get_contents('php://input');
 
-if (empty($rawBody)) {
+// Handle non-POST or empty payload immediately
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($rawBody)) {
     http_response_code(200);
+    header('Content-Type: text/plain; charset=UTF-8');
     echo "OK";
     exit;
 }
 
-// Initialize cURL to forward payload to GAS
+// -------------------------------------------------------------
+// 1. Immediately return HTTP 200 OK and close connection to LINE
+// -------------------------------------------------------------
+ignore_user_abort(true);
+set_time_limit(35);
+
+ob_start();
+http_response_code(200);
+header('Content-Type: text/plain; charset=UTF-8');
+echo 'OK';
+$size = ob_get_length();
+header("Content-Length: $size");
+header('Connection: close');
+ob_end_flush();
+@ob_flush();
+flush();
+
+if (function_exists('fastcgi_finish_request')) {
+    fastcgi_finish_request();
+}
+
+// -------------------------------------------------------------
+// 2. Post-connection background forward to Google Apps Script
+// -------------------------------------------------------------
 $ch = curl_init();
 
 curl_setopt_array($ch, [
@@ -45,11 +62,5 @@ curl_setopt_array($ch, [
     CURLOPT_SSL_VERIFYPEER => true
 ]);
 
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$curlErr = curl_error($ch);
+curl_exec($ch);
 curl_close($ch);
-
-// Always respond HTTP 200 to LINE to prevent webhook delivery retries
-http_response_code(200);
-echo "OK";
